@@ -51,16 +51,16 @@
             this.radioButtonText = new System.Windows.Forms.RadioButton();
             this.buttonClear = new System.Windows.Forms.Button();
             this.textBoxConsole = new System.Windows.Forms.TextBox();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.groupBoxControl = new System.Windows.Forms.GroupBox();
-            this.groupBoxConnection = new System.Windows.Forms.GroupBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.comboBoxPortList = new System.Windows.Forms.ComboBox();
-            this.labelPortList = new System.Windows.Forms.Label();
-            this.comboBoxBaudRate = new System.Windows.Forms.ComboBox();
-            this.labelBaudRate = new System.Windows.Forms.Label();
-            this.buttonConnect = new System.Windows.Forms.Button();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBoxConnection = new System.Windows.Forms.GroupBox();
             this.buttonRefresh = new System.Windows.Forms.Button();
+            this.buttonConnect = new System.Windows.Forms.Button();
+            this.labelBaudRate = new System.Windows.Forms.Label();
+            this.comboBoxBaudRate = new System.Windows.Forms.ComboBox();
+            this.labelPortList = new System.Windows.Forms.Label();
+            this.comboBoxPortList = new System.Windows.Forms.ComboBox();
+            this.groupBoxControl = new System.Windows.Forms.GroupBox();
             this.mainFormMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBoxConsole.SuspendLayout();
@@ -68,9 +68,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.groupBoxConnection.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -182,7 +180,7 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.groupBoxConsole, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.splitContainer2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -280,36 +278,29 @@
             this.textBoxConsole.Location = new System.Drawing.Point(3, 3);
             this.textBoxConsole.Multiline = true;
             this.textBoxConsole.Name = "textBoxConsole";
+            this.textBoxConsole.ReadOnly = true;
             this.textBoxConsole.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.textBoxConsole.Size = new System.Drawing.Size(676, 247);
             this.textBoxConsole.TabIndex = 1;
             // 
-            // splitContainer2
+            // serialPort1
             // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(3, 307);
-            this.splitContainer2.Name = "splitContainer2";
+            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.DataRec);
             // 
-            // splitContainer2.Panel1
+            // tableLayoutPanel3
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.groupBoxControl);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.groupBoxConnection);
-            this.splitContainer2.Size = new System.Drawing.Size(688, 197);
-            this.splitContainer2.SplitterDistance = 495;
-            this.splitContainer2.TabIndex = 1;
-            // 
-            // groupBoxControl
-            // 
-            this.groupBoxControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxControl.Location = new System.Drawing.Point(0, 0);
-            this.groupBoxControl.Name = "groupBoxControl";
-            this.groupBoxControl.Size = new System.Drawing.Size(495, 197);
-            this.groupBoxControl.TabIndex = 0;
-            this.groupBoxControl.TabStop = false;
-            this.groupBoxControl.Text = "Control";
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel3.Controls.Add(this.groupBoxControl, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.groupBoxConnection, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 307);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(688, 197);
+            this.tableLayoutPanel3.TabIndex = 1;
             // 
             // groupBoxConnection
             // 
@@ -319,55 +310,28 @@
             this.groupBoxConnection.Controls.Add(this.comboBoxBaudRate);
             this.groupBoxConnection.Controls.Add(this.labelPortList);
             this.groupBoxConnection.Controls.Add(this.comboBoxPortList);
-            this.groupBoxConnection.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBoxConnection.Location = new System.Drawing.Point(3, 0);
+            this.groupBoxConnection.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxConnection.Location = new System.Drawing.Point(491, 3);
             this.groupBoxConnection.Name = "groupBoxConnection";
-            this.groupBoxConnection.Size = new System.Drawing.Size(186, 197);
-            this.groupBoxConnection.TabIndex = 0;
+            this.groupBoxConnection.Size = new System.Drawing.Size(194, 191);
+            this.groupBoxConnection.TabIndex = 2;
             this.groupBoxConnection.TabStop = false;
             this.groupBoxConnection.Text = "Connection";
             // 
-            // serialPort1
+            // buttonRefresh
             // 
-            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.DataRec);
-            // 
-            // comboBoxPortList
-            // 
-            this.comboBoxPortList.FormattingEnabled = true;
-            this.comboBoxPortList.Location = new System.Drawing.Point(6, 52);
-            this.comboBoxPortList.Name = "comboBoxPortList";
-            this.comboBoxPortList.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxPortList.TabIndex = 0;
-            // 
-            // labelPortList
-            // 
-            this.labelPortList.AutoSize = true;
-            this.labelPortList.Location = new System.Drawing.Point(6, 33);
-            this.labelPortList.Name = "labelPortList";
-            this.labelPortList.Size = new System.Drawing.Size(45, 13);
-            this.labelPortList.TabIndex = 1;
-            this.labelPortList.Text = "Port List";
-            // 
-            // comboBoxBaudRate
-            // 
-            this.comboBoxBaudRate.FormattingEnabled = true;
-            this.comboBoxBaudRate.Location = new System.Drawing.Point(6, 105);
-            this.comboBoxBaudRate.Name = "comboBoxBaudRate";
-            this.comboBoxBaudRate.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxBaudRate.TabIndex = 2;
-            // 
-            // labelBaudRate
-            // 
-            this.labelBaudRate.AutoSize = true;
-            this.labelBaudRate.Location = new System.Drawing.Point(6, 86);
-            this.labelBaudRate.Name = "labelBaudRate";
-            this.labelBaudRate.Size = new System.Drawing.Size(58, 13);
-            this.labelBaudRate.TabIndex = 3;
-            this.labelBaudRate.Text = "Baud Rate";
+            this.buttonRefresh.Location = new System.Drawing.Point(145, 50);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(23, 23);
+            this.buttonRefresh.TabIndex = 5;
+            this.buttonRefresh.Text = "Refresh";
+            this.buttonRefresh.UseVisualStyleBackColor = true;
+            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
             // buttonConnect
             // 
-            this.buttonConnect.Location = new System.Drawing.Point(52, 153);
+            this.buttonConnect.Enabled = false;
+            this.buttonConnect.Location = new System.Drawing.Point(64, 149);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(75, 23);
             this.buttonConnect.TabIndex = 4;
@@ -375,15 +339,49 @@
             this.buttonConnect.UseVisualStyleBackColor = true;
             this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
             // 
-            // buttonRefresh
+            // labelBaudRate
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(133, 50);
-            this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(23, 23);
-            this.buttonRefresh.TabIndex = 5;
-            this.buttonRefresh.Text = "Refresh";
-            this.buttonRefresh.UseVisualStyleBackColor = true;
-            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
+            this.labelBaudRate.AutoSize = true;
+            this.labelBaudRate.Location = new System.Drawing.Point(15, 86);
+            this.labelBaudRate.Name = "labelBaudRate";
+            this.labelBaudRate.Size = new System.Drawing.Size(58, 13);
+            this.labelBaudRate.TabIndex = 3;
+            this.labelBaudRate.Text = "Baud Rate";
+            // 
+            // comboBoxBaudRate
+            // 
+            this.comboBoxBaudRate.FormattingEnabled = true;
+            this.comboBoxBaudRate.Location = new System.Drawing.Point(18, 102);
+            this.comboBoxBaudRate.Name = "comboBoxBaudRate";
+            this.comboBoxBaudRate.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxBaudRate.TabIndex = 2;
+            // 
+            // labelPortList
+            // 
+            this.labelPortList.AutoSize = true;
+            this.labelPortList.Location = new System.Drawing.Point(15, 36);
+            this.labelPortList.Name = "labelPortList";
+            this.labelPortList.Size = new System.Drawing.Size(45, 13);
+            this.labelPortList.TabIndex = 1;
+            this.labelPortList.Text = "Port List";
+            // 
+            // comboBoxPortList
+            // 
+            this.comboBoxPortList.FormattingEnabled = true;
+            this.comboBoxPortList.Location = new System.Drawing.Point(18, 52);
+            this.comboBoxPortList.Name = "comboBoxPortList";
+            this.comboBoxPortList.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxPortList.TabIndex = 0;
+            // 
+            // groupBoxControl
+            // 
+            this.groupBoxControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxControl.Location = new System.Drawing.Point(3, 3);
+            this.groupBoxControl.Name = "groupBoxControl";
+            this.groupBoxControl.Size = new System.Drawing.Size(482, 191);
+            this.groupBoxControl.TabIndex = 1;
+            this.groupBoxControl.TabStop = false;
+            this.groupBoxControl.Text = "Control";
             // 
             // MainForm
             // 
@@ -407,9 +405,7 @@
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            this.splitContainer2.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBoxConnection.ResumeLayout(false);
             this.groupBoxConnection.PerformLayout();
             this.ResumeLayout(false);
@@ -441,15 +437,15 @@
         private System.Windows.Forms.Button buttonClear;
         private System.Windows.Forms.TextBox textBoxConsole;
         private System.IO.Ports.SerialPort serialPort1;
-        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.GroupBox groupBoxConnection;
-        private System.Windows.Forms.GroupBox groupBoxControl;
         private System.Windows.Forms.Button buttonRefresh;
         private System.Windows.Forms.Button buttonConnect;
         private System.Windows.Forms.Label labelBaudRate;
         private System.Windows.Forms.ComboBox comboBoxBaudRate;
         private System.Windows.Forms.Label labelPortList;
         private System.Windows.Forms.ComboBox comboBoxPortList;
+        private System.Windows.Forms.GroupBox groupBoxControl;
     }
 }
 

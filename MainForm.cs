@@ -83,7 +83,7 @@ namespace RobotControlPanel
                 byte[] data = new byte[bytesToRead];
                 serialPort1.Read(data, 0, bytesToRead);
                 textBoxConsole.Invoke(new OutputUpdateDelegate(OutputUpdateCallback), data);
-            }
+            }   
             catch (System.Exception ex)
             {
                 MessageBox.Show("There was an ERROR! The error message: \n\n" + ex.ToString(), "Error");
@@ -105,6 +105,23 @@ namespace RobotControlPanel
             if (ports.Length == 0) { buttonConnect.Enabled = false; }
             else { comboBoxPortList.DataSource = ports; buttonConnect.Enabled = true; }
         }
+        //groupBoxConnectionStatus
+        private void groupBoxConnectionStatus(bool status)
+        {
+            if(status)
+            {
+                buttonConnect.Text="Disconnect";
+                comboBoxPortList.Enabled=false;
+                comboBoxBaudRate.Enabled=false;
+                buttonRefresh.Enabled=false;
+            }
+            else {
+                buttonConnect.Text="Connect";
+                comboBoxPortList.Enabled=true;
+                comboBoxBaudRate.Enabled=true;
+                buttonRefresh.Enabled=true;
+            }
+        }
         //Connect/Disconnect
         private void buttonConnect_Click(object sender, EventArgs e)
         {
@@ -112,7 +129,7 @@ namespace RobotControlPanel
             {
                 try {
                     serialPort1.Close();
-                    buttonConnect.Text = "Connect";
+                    groupBoxConnectionStatus(false);
                 }
                 catch (System.Exception ex) { MessageBox.Show("There was an ERROR! The error message: \n\n" + ex.ToString(), "Error"); }
             }
@@ -123,7 +140,7 @@ namespace RobotControlPanel
                 try
                 {
                     serialPort1.Open();
-                    buttonConnect.Text = "Disconnect";
+                    groupBoxConnectionStatus(true);
                 }
                 catch
                 {
@@ -131,7 +148,7 @@ namespace RobotControlPanel
                     {
                         serialPort1.PortName = serialPort1.PortName.Remove(serialPort1.PortName.Length - 1);
                         serialPort1.Open();
-                        buttonConnect.Text = "Disconnect";
+                        groupBoxConnectionStatus(true);
                     }
                     catch (System.Exception ex) { MessageBox.Show("There was an ERROR! The error message: \n\n" + ex.ToString(), "Error"); }
                 }
