@@ -1,0 +1,12 @@
+D:\Krisztián\Fejlesztések\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\bin\Debug\RobotControlPanel.exe
+D:\Krisztián\Fejlesztések\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\bin\Debug\RobotControlPanel.pdb
+D:\Krisztián\Fejlesztések\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Krisztián\Fejlesztések\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\obj\x86\Debug\RobotControlPanel.MainForm.resources
+D:\Krisztián\Fejlesztések\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\obj\x86\Debug\RobotControlPanel.Properties.Resources.resources
+D:\Krisztián\Fejlesztések\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\obj\x86\Debug\RobotControlPanel.exe
+D:\Krisztián\Fejlesztések\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\obj\x86\Debug\RobotControlPanel.pdb
+D:\Krisztián\Fejlesztések\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\bin\Debug\RobotControlPanel.exe.config
+D:\Krisztián\Fejlesztések\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\bin\Debug\System.Data.SQLite.dll
+D:\Krisztián\Fejlesztések\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\bin\Debug\System.Data.SQLite.xml
+D:\Krisztián\Fejlesztések\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\obj\x86\Debug\RobotControlPanel.SettingsForm.resources
+D:\Krisztián\Fejlesztések\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\obj\x86\Debug\RobotControlPanel.AboutRobotControlPanel.resources

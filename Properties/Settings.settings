@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RobotControlPanel.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="dbPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Krisztián\Fejlesztések\Robot Control Panel\RobotControlPanelv0.12\old\default.db</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
