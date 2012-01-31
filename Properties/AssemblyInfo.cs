@@ -9,7 +9,7 @@ using System.Resources;
 [assembly: AssemblyTitle("Robot Control Panel")]
 [assembly: AssemblyDescription("a GUI for robots")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Mukli Krisztián")]
+[assembly: AssemblyCompany("Mukli Krisztián, Kiss Boldizsár, Bodor Attila, Balogh István")]
 [assembly: AssemblyProduct("RobotControlPanel")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
@@ -33,6 +33,6 @@ using System.Resources;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.12.0.0")]
+[assembly: AssemblyFileVersion("0.12.0.0")]
 [assembly: NeutralResourcesLanguageAttribute("en")]

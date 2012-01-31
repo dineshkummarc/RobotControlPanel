@@ -71,6 +71,7 @@
     <Compile Include="AboutRobotControlPanel.Designer.cs">
       <DependentUpon>AboutRobotControlPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cmd.cs" />
     <Compile Include="dbHandler.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

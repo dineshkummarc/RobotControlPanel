@@ -51,8 +51,8 @@
             this.radioButtonText = new System.Windows.Forms.RadioButton();
             this.buttonClear = new System.Windows.Forms.Button();
             this.textBoxConsole = new System.Windows.Forms.TextBox();
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBoxControl = new System.Windows.Forms.GroupBox();
             this.groupBoxConnection = new System.Windows.Forms.GroupBox();
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.buttonConnect = new System.Windows.Forms.Button();
@@ -60,7 +60,8 @@
             this.comboBoxBaudRate = new System.Windows.Forms.ComboBox();
             this.labelPortList = new System.Windows.Forms.Label();
             this.comboBoxPortList = new System.Windows.Forms.ComboBox();
-            this.groupBoxControl = new System.Windows.Forms.GroupBox();
+            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.comboBoxCmdList = new System.Windows.Forms.ComboBox();
             this.mainFormMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBoxConsole.SuspendLayout();
@@ -69,6 +70,7 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            this.groupBoxControl.SuspendLayout();
             this.groupBoxConnection.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -283,10 +285,6 @@
             this.textBoxConsole.Size = new System.Drawing.Size(676, 247);
             this.textBoxConsole.TabIndex = 1;
             // 
-            // serialPort1
-            // 
-            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.DataRec);
-            // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 2;
@@ -301,6 +299,17 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(688, 197);
             this.tableLayoutPanel3.TabIndex = 1;
+            // 
+            // groupBoxControl
+            // 
+            this.groupBoxControl.Controls.Add(this.comboBoxCmdList);
+            this.groupBoxControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxControl.Location = new System.Drawing.Point(3, 3);
+            this.groupBoxControl.Name = "groupBoxControl";
+            this.groupBoxControl.Size = new System.Drawing.Size(482, 191);
+            this.groupBoxControl.TabIndex = 1;
+            this.groupBoxControl.TabStop = false;
+            this.groupBoxControl.Text = "Control";
             // 
             // groupBoxConnection
             // 
@@ -373,15 +382,17 @@
             this.comboBoxPortList.Size = new System.Drawing.Size(121, 21);
             this.comboBoxPortList.TabIndex = 0;
             // 
-            // groupBoxControl
+            // serialPort1
             // 
-            this.groupBoxControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxControl.Location = new System.Drawing.Point(3, 3);
-            this.groupBoxControl.Name = "groupBoxControl";
-            this.groupBoxControl.Size = new System.Drawing.Size(482, 191);
-            this.groupBoxControl.TabIndex = 1;
-            this.groupBoxControl.TabStop = false;
-            this.groupBoxControl.Text = "Control";
+            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.DataRec);
+            // 
+            // comboBoxCmdList
+            // 
+            this.comboBoxCmdList.FormattingEnabled = true;
+            this.comboBoxCmdList.Location = new System.Drawing.Point(23, 28);
+            this.comboBoxCmdList.Name = "comboBoxCmdList";
+            this.comboBoxCmdList.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxCmdList.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -406,6 +417,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
+            this.groupBoxControl.ResumeLayout(false);
             this.groupBoxConnection.ResumeLayout(false);
             this.groupBoxConnection.PerformLayout();
             this.ResumeLayout(false);
@@ -446,6 +458,7 @@
         private System.Windows.Forms.Label labelPortList;
         private System.Windows.Forms.ComboBox comboBoxPortList;
         private System.Windows.Forms.GroupBox groupBoxControl;
+        private System.Windows.Forms.ComboBox comboBoxCmdList;
     }
 }
 

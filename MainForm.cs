@@ -18,7 +18,7 @@ namespace RobotControlPanel
         public MainForm()
         {
             InitializeComponent();
-            if(Properties.Settings.Default.dbPath.Length != 0) dataBase.SetParams(Properties.Settings.Default.dbPath);
+            if(Properties.Settings.Default.dbPath.Length != 0) dataBase.SetdbPath(Properties.Settings.Default.dbPath);
             comboBoxBaudRate.DataSource = bauds;
             buttonRefresh_Click(null,null);
         }
@@ -35,17 +35,29 @@ namespace RobotControlPanel
         private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
         {
             openDB.ShowDialog();
-            dataBase.readCmds();
-
+            Cmd[] cmdArray = new Cmd[dataBase.countCmd()];
+            string[] cmdlist = dataBase.readCmd(dataBase.countCmd());
+            for (int i = 0; i < dataBase.countCmd(); i++)
+            {
+                cmdArray[i] = new Cmd();
+                cmdArray[i].cmdName = cmdlist[i];
+                cmdArray[i].cmdByte = dataBase.readByte(cmdArray[i].cmdName);
+                comboBoxCmdList.Items.Add(cmdArray[i].cmdName);
+            }
+            
+            //countCMD-->visszatér a cmd-k számával.
+            //Cmd[] cmdArray=new Cmd[countCmd];
+            //for ciklusban végigjárjuk a tömböt, minden elemre:
+            //cmdArray[i] = new Cmd();cmdArray[i].cmdName=readCmd();cmdArray[i].cmdByte=readByte(cmdArray[i].cmdName);
         }
         private void openDB_FileOk(object sender, CancelEventArgs e)
         {
-            dataBase.SetParams(openDB.FileName);
+            dataBase.SetdbPath(openDB.FileName);
         }
         //Close database
         private void closeDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dataBase.SetParams("");
+            dataBase.SetdbPath("");
         }
         //Close
         private void toolStripMenuItemClose_Click(object sender, EventArgs e)
