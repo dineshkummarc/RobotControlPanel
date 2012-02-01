@@ -11,12 +11,12 @@ namespace RobotControlPanel
     class dbHandler
     {
         private string dbPath;
-
+        //SetdbPath: Set path of actually used database
         public void SetdbPath(string dbPath)
         {
             this.dbPath = dbPath;
         }
-
+        //countCmd: Return the number of commands
         public int countCmd()
         {
             int count = 0;
@@ -41,11 +41,12 @@ namespace RobotControlPanel
             db.Close();
             return count;
         }
-
-        public string[] readCmd(int lenght)
+        //readCmd: Return the list of commands
+        public List<Cmd> readCmds()
         {
             int i = 0;
-            string[] cmd = new string[lenght];
+            List<Cmd> cmdList = new List<Cmd>();
+            
             SQLiteConnection db = new SQLiteConnection();
             try
             {
@@ -58,17 +59,49 @@ namespace RobotControlPanel
             }
                 SQLiteCommand open = new SQLiteCommand();
                 open.Connection = db;
-                open.CommandText = "SELECT cmdName FROM cmds";  
+                open.CommandText = "SELECT cmdID, cmdName, cmdByte, cmdComment FROM cmds"; 
+
+
                 SQLiteDataReader dr = open.ExecuteReader();
                 while (dr.Read())
                 {
-                    cmd[i] = dr["cmdName"].ToString();
+                    cmdList.Add(new Cmd());
+                    cmdList[i].cmdID = Convert.ToInt32(dr["cmdID"]);
+                    cmdList[i].cmdName = dr["cmdName"].ToString();
+                    cmdList[i].cmdByte = Convert.ToInt32(dr["cmdByte"]);
+                    cmdList[i].cmdComment = dr["cmdComment"].ToString();
+                    cmdList[i].parameterList = new List<Parameter>();
+                    //Parameter-reader SQL command
+                    SQLiteCommand parameters = new SQLiteCommand();
+                    parameters.Connection = db;
+                    parameters.CommandText = "SELECT paramName, paramMin, paramMax, paramDefault, paramComment FROM params WHERE cmdID=" + cmdList[i].cmdID;
+                    SQLiteDataReader param = parameters.ExecuteReader();
+                    int j = 0;
+                    while (param.Read())
+                    {
+                        
+                        //cmdList[i].AddParameter();
+                        cmdList[i].parameterList.Add(new Parameter());
+                        cmdList[i].parameterList[j].paramName = param["paramName"].ToString();
+
+                        try { cmdList[i].parameterList[j].paramMin = Convert.ToInt32(param["paramMin"]); }
+                        catch (System.InvalidCastException) { cmdList[i].parameterList[j].paramMin = null; }
+
+                        try { cmdList[i].parameterList[j].paramMax = Convert.ToInt32(param["paramMax"]); }
+                        catch (System.InvalidCastException) { cmdList[i].parameterList[j].paramMax = null; }
+
+                        try { cmdList[i].parameterList[j].paramDefault = Convert.ToInt32(param["paramDefault"]); } 
+                        catch (System.InvalidCastException) { cmdList[i].parameterList[j].paramDefault = null; } 
+                       
+                        cmdList[i].parameterList[j].paramComment = param["paramComment"].ToString();
+                        j++;
+                    }
                     i++;
                 }
             db.Close();
-            return cmd;
+            return cmdList;
         }
-
+        //readByte: Return a byte belong to a command
         public int readByte(string cmdName)
         {
             int Byte = 0;
@@ -93,6 +126,13 @@ namespace RobotControlPanel
             }
             db.Close();
             return Byte;
+        }
+        //readParameters: Return a list of parameters, which are belong to a command
+        public List<Parameter> readParameters()
+        {
+            List<Parameter> paramList = new List<Parameter>();
+
+            return paramList;
         }
     }
 }

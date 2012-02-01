@@ -13,13 +13,16 @@ namespace RobotControlPanel
 {
     public partial class MainForm : Form
     {
+        //Intantiation of classes and important lists
         dbHandler dataBase = new dbHandler();
-        int[] bauds = { 921600, 460800, 230400, 115200, 57600, 38400, 19200, 9600, 4800, 2400, 1200, 300, 150, 110 };
+        List<Cmd> cmdList = new List<Cmd>();
+        List<int> baudList = new List<int>() { 921600, 460800, 230400, 115200, 57600, 38400, 19200, 9600, 4800, 2400, 1200, 300, 150, 110 };      
+        //MainForm Initialization
         public MainForm()
         {
             InitializeComponent();
             if(Properties.Settings.Default.dbPath.Length != 0) dataBase.SetdbPath(Properties.Settings.Default.dbPath);
-            comboBoxBaudRate.DataSource = bauds;
+            comboBoxBaudRate.DataSource = baudList;
             buttonRefresh_Click(null,null);
         }
 
@@ -29,27 +32,21 @@ namespace RobotControlPanel
             if (serialPort1.IsOpen) serialPort1.Close();
         }
         //----
+        private void cmdReadFromDB()
+        {
+            cmdList = dataBase.readCmds();
+        }
         //Menu
         //File
         //Open
         private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
         {
             openDB.ShowDialog();
-            Cmd[] cmdArray = new Cmd[dataBase.countCmd()];
-            string[] cmdlist = dataBase.readCmd(dataBase.countCmd());
-            for (int i = 0; i < dataBase.countCmd(); i++)
-            {
-                cmdArray[i] = new Cmd();
-                cmdArray[i].cmdName = cmdlist[i];
-                cmdArray[i].cmdByte = dataBase.readByte(cmdArray[i].cmdName);
-                comboBoxCmdList.Items.Add(cmdArray[i].cmdName);
-            }
-            
-            //countCMD-->visszatér a cmd-k számával.
-            //Cmd[] cmdArray=new Cmd[countCmd];
-            //for ciklusban végigjárjuk a tömböt, minden elemre:
-            //cmdArray[i] = new Cmd();cmdArray[i].cmdName=readCmd();cmdArray[i].cmdByte=readByte(cmdArray[i].cmdName);
+            cmdReadFromDB();
+            comboBoxCmdListFill();
+
         }
+        //Open, FileOK
         private void openDB_FileOk(object sender, CancelEventArgs e)
         {
             dataBase.SetdbPath(openDB.FileName);
@@ -105,6 +102,29 @@ namespace RobotControlPanel
         private void buttonClear_Click(object sender, EventArgs e)
         {
             textBoxConsole.Text = "";
+        }
+        //---
+        //Control
+        //comboBoxCmdList
+        private void comboBoxCmdListFill()
+        {
+            for (int i = 0; i < (cmdList.Count); i++)
+            {
+                comboBoxCmdList.Items.Add(cmdList[i].cmdName);
+            }
+        }
+        //Send button
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int i = comboBoxCmdList.SelectedIndex;
+            string param = String.Empty;
+            for (int j = 0; j < cmdList[i].parameterList.Count; j++)
+            {
+                param +=" "+cmdList[i].parameterList[j].paramMin.ToString() + " " 
+                    + cmdList[i].parameterList[j].paramMax.ToString() + " " 
+                    + cmdList[i].parameterList[j].paramDefault.ToString();
+            }
+            MessageBox.Show(cmdList[i].cmdByte.ToString()+" "+cmdList[i].cmdComment+" "+param);
         }
         //---
         //Connection
