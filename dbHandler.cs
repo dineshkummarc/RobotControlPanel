@@ -45,8 +45,7 @@ namespace RobotControlPanel
         public List<Cmd> readCmds()
         {
             int i = 0;
-            List<Cmd> cmdList = new List<Cmd>();
-            
+            List<Cmd> cmdList = new List<Cmd>();            
             SQLiteConnection db = new SQLiteConnection();
             try
             {
@@ -57,30 +56,26 @@ namespace RobotControlPanel
             {
                 MessageBox.Show("There was an ERROR! The error message: \n\n" + ex.ToString(), "Error");
             }
-                SQLiteCommand open = new SQLiteCommand();
-                open.Connection = db;
-                open.CommandText = "SELECT cmdID, cmdName, cmdByte, cmdComment FROM cmds"; 
-
-
-                SQLiteDataReader dr = open.ExecuteReader();
-                while (dr.Read())
+                SQLiteCommand cmds = new SQLiteCommand();
+                cmds.Connection = db;
+                cmds.CommandText = "SELECT cmdID, cmdName, cmdByte, cmdComment FROM cmds"; 
+                SQLiteDataReader cmd = cmds.ExecuteReader();
+                while (cmd.Read())
                 {
                     cmdList.Add(new Cmd());
-                    cmdList[i].cmdID = Convert.ToInt32(dr["cmdID"]);
-                    cmdList[i].cmdName = dr["cmdName"].ToString();
-                    cmdList[i].cmdByte = Convert.ToInt32(dr["cmdByte"]);
-                    cmdList[i].cmdComment = dr["cmdComment"].ToString();
+                    cmdList[i].cmdID = Convert.ToInt32(cmd["cmdID"]);
+                    cmdList[i].cmdName = cmd["cmdName"].ToString();
+                    cmdList[i].cmdByte = Convert.ToInt32(cmd["cmdByte"]);
+                    cmdList[i].cmdComment = cmd["cmdComment"].ToString();
                     cmdList[i].parameterList = new List<Parameter>();
-                    //Parameter-reader SQL command
+                    //Parameter-reader
                     SQLiteCommand parameters = new SQLiteCommand();
                     parameters.Connection = db;
                     parameters.CommandText = "SELECT paramName, paramMin, paramMax, paramDefault, paramComment FROM params WHERE cmdID=" + cmdList[i].cmdID;
                     SQLiteDataReader param = parameters.ExecuteReader();
                     int j = 0;
                     while (param.Read())
-                    {
-                        
-                        //cmdList[i].AddParameter();
+                    {                        
                         cmdList[i].parameterList.Add(new Parameter());
                         cmdList[i].parameterList[j].paramName = param["paramName"].ToString();
 
@@ -101,7 +96,7 @@ namespace RobotControlPanel
             db.Close();
             return cmdList;
         }
-        //readByte: Return a byte belong to a command
+        //readByte: Return a byte, which is belong to a command - unnecessary
         public int readByte(string cmdName)
         {
             int Byte = 0;
@@ -127,11 +122,10 @@ namespace RobotControlPanel
             db.Close();
             return Byte;
         }
-        //readParameters: Return a list of parameters, which are belong to a command
+        //readParameters: Return a list of parameters, which is belong to a command - unnecessary
         public List<Parameter> readParameters()
         {
             List<Parameter> paramList = new List<Parameter>();
-
             return paramList;
         }
     }
