@@ -1,0 +1,62 @@
+Robot Control Panel
+
+A fancy GUI for robots. 
+
+Contributors:
+=============
+Krisztián Mukli (krisztianmukli)
+István Balogh (explorer9)
+Boldizsár Kiss (idlob)
+Attila Bodor (AYSanonymus)
+Ervin Burkus (ervinbur)
+
+Version history
+===============
+
+v0.12 (under development)
++ Completelly re-written from scratch
++ Better SQLite integration
++ Project was moved to Github
++ New GUI
+
+Every earlier than v0.12 version available: http://www.mediafire.com/?5rgrcbu4nw1ab
+v0.11.3 (2011.12.14)
+- Open DB button inactive
+# Add CMD button renamed to Edit DB, and added a grid-based database-editor (but it didn't fully functionalized)
++ Robot can controlled by keys (and keys can controlled by Kinect)
+
+v0.11.2 (2011.12.10)
++ Open DB button added
++ Add CMD button added
+* Bluetooth port-bug fixed
+
+v0.11.1 (2011.12.07.)
+* Some little GUI-bug fixed
+
+v0.11 (2011.12.01.)
++ Completely re-written from scratch
++ Commands in an SQLite-database
++ First database-reader method
+
+v0.10.3 (2011.11.24.)
++ Commands store in a text-file
+
+v0.10.2 (2011.11.17.)
+* Parameter textbox-bug fixed
+# First time, when bluetooth-port bug was came up
+
+v0.10.1 (2011.11.10.)
+* Some little gui bug fixed
++ Mnemonic-keys for buttons added
+
+v0.10 (2011.11.03.)
++ Textboxes for parameters
++ Combobox for commands
+- Turn left, Turn Right buttons removed
+
+v0.9 (2011.10.23) - first archived version
++ Console was added
++ Connection was added
++ 6 button for control: Forward, Backward, Turn left, Turn right, Stop, Emergency Stop
+
+v0.1-0.8 (2011.10.23.)- first initial test version, no release, no source
