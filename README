@@ -19,7 +19,8 @@ v0.12 (under development)
 + Project was moved to Github
 + New GUI
 
-Every earlier than v0.12 version available: http://www.mediafire.com/?5rgrcbu4nw1ab
+=>Every earlier version than v0.12 version available: http://www.mediafire.com/?5rgrcbu4nw1ab
+
 v0.11.3 (2011.12.14)
 - Open DB button inactive
 # Add CMD button renamed to Edit DB, and added a grid-based database-editor (but it didn't fully functionalized)
