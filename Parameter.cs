@@ -6,10 +6,16 @@ namespace RobotControlPanel
 {
     class Parameter
     {
-        public string paramName { get; set; }
-        public int? paramMin { get; set; }
-        public int? paramMax { get; set; }
-        public int? paramDefault { get; set; }
-        public string paramComment { get; set; }
+        protected string paramname;
+        protected int? parammin;
+        protected int? parammax;
+        protected int? paramdefault;
+        protected string paramcomment;
+
+        public string paramName { get { return this.paramname; } set { this.paramname = value; } }
+        public int? paramMin { get { return this.parammin; } set { this.parammin = value; } }
+        public int? paramMax { get { return this.parammax; } set { this.parammax = value; } }
+        public int? paramDefault { get { return this.paramdefault; } set { this.paramdefault = value; } }
+        public string paramComment { get { return this.paramcomment; } set { this.paramcomment = value; } }
     }
 }
