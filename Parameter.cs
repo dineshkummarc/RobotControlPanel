@@ -6,16 +6,24 @@ namespace RobotControlPanel
 {
     class Parameter
     {
-        protected string paramname;
-        protected int? parammin;
-        protected int? parammax;
-        protected int? paramdefault;
-        protected string paramcomment;
 
-        public string paramName { get { return this.paramname; } set { this.paramname = value; } }
-        public int? paramMin { get { return this.parammin; } set { this.parammin = value; } }
-        public int? paramMax { get { return this.parammax; } set { this.parammax = value; } }
-        public int? paramDefault { get { return this.paramdefault; } set { this.paramdefault = value; } }
-        public string paramComment { get { return this.paramcomment; } set { this.paramcomment = value; } }
+        private string parametername;
+        private int parameterorder;
+        private int? parametermin;
+        private int? parametermax;
+        private int? parameterdefault;
+        //protected string paramcomment;
+        private int? parametervalue;
+        private string parametertype;
+        
+
+        public string parameterName { get { return this.parametername; } set { this.parametername = value; } }
+        public int parameterOrder { get { return this.parameterorder; } set { this.parameterorder = value; } }
+        public int? parameterMin { get { return this.parametermin; } set { this.parametermin = value; } }
+        public int? parameterMax { get { return this.parametermax; } set { this.parametermax = value; } }
+        public int? parameterDefault { get { return this.parameterdefault; } set { this.parameterdefault = value; } }
+        //public string paramComment { get { return this.paramcomment; } set { this.paramcomment = value; } }
+        public int? parameterValue { get { return this.parametervalue; } set { this.parametervalue = value; } }
+        public string parameterType { get { return this.parametertype; } set { this.parametertype = value; } }
     }
 }

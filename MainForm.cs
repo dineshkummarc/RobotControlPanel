@@ -13,10 +13,10 @@ namespace RobotControlPanel
 {
     public partial class MainForm : Form
     {
-        //Intantiation of classes and important lists
+        //Instantiation of classes and important lists
         dbHandler dataBase = new dbHandler();
-        List<Cmd> cmdList = new List<Cmd>();
-        List<int> baudList = new List<int>() { 921600, 460800, 230400, 115200, 57600, 38400, 19200, 9600, 4800, 2400, 1200, 300, 150, 110 };      
+        List<CmdGroup> cmdGroupList = new List<CmdGroup>();
+        const List<int> baudList = new List<int>() { 921600, 460800, 230400, 115200, 57600, 38400, 19200, 9600, 4800, 2400, 1200, 300, 150, 110 };      
         //MainForm Initialization
         public MainForm()
         {
@@ -34,7 +34,7 @@ namespace RobotControlPanel
         //----
         private void cmdReadFromDB()
         {
-            cmdList = dataBase.readCmds();
+            cmdGroupList = dataBase.cmdFetcher();
         }
         //Menu
         //File
@@ -108,23 +108,23 @@ namespace RobotControlPanel
         //comboBoxCmdList
         private void comboBoxCmdListFill()
         {
-            for (int i = 0; i < (cmdList.Count); i++)
-            {
-                comboBoxCmdList.Items.Add(cmdList[i].cmdName);
-            }
+            //for (int i = 0; i < (cmdGroupList.Count); i++)
+            //{
+            //    comboBoxCmdList.Items.Add(cmdGroupList[i].cmdName);
+            //}
         }
         //Send button
         private void button1_Click(object sender, EventArgs e)
         {
-            int i = comboBoxCmdList.SelectedIndex;
-            string param = String.Empty;
-            for (int j = 0; j < cmdList[i].parameterList.Count; j++)
-            {
-                param +=" "+cmdList[i].parameterList[j].paramMin.ToString() + " " 
-                    + cmdList[i].parameterList[j].paramMax.ToString() + " " 
-                    + cmdList[i].parameterList[j].paramDefault.ToString();
-            }
-            MessageBox.Show(cmdList[i].cmdByte.ToString()+" "+cmdList[i].cmdComment+" "+param);
+            //int i = comboBoxCmdList.SelectedIndex;
+            //string param = String.Empty;
+            //for (int j = 0; j < cmdGroupList[i].parameterList.Count; j++)
+            //{
+            //    param +=" "+cmdGroupList[i].parameterList[j].parameterMin.ToString() + " " 
+            //        + cmdGroupList[i].parameterList[j].parameterMax.ToString() + " " 
+            //        + cmdGroupList[i].parameterList[j].parameterDefault.ToString();
+            //}
+            //MessageBox.Show(cmdGroupList[i].cmdByte.ToString()+" "/*+cmdList[i].cmdComment*/+" "+param);
         }
         //---
         //Connection

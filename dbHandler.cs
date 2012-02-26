@@ -16,117 +16,70 @@ namespace RobotControlPanel
         {
             this.dbPath = dbPath;
         }
-        //countCmd: Return the number of commands
-        public int countCmd()
-        {
-            int count = 0;
-            SQLiteConnection db = new SQLiteConnection();
-            try
-            {
-                db.ConnectionString = "Data Source=" + dbPath;
-                db.Open();
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show("There was an ERROR! The error message: \n\n" + ex.ToString(), "Error");
-            }
-            SQLiteCommand open = new SQLiteCommand();
-            open.Connection = db;
-            open.CommandText = "SELECT COUNT(cmdName) FROM cmds";
-            SQLiteDataReader dr = open.ExecuteReader();
-            while (dr.Read())
-            {
-                count = Convert.ToInt32(dr["COUNT(cmdName)"]);
-            }
-            db.Close();
-            return count;
-        }
-        //readCmd: Return the list of commands
-        public List<Cmd> readCmds()
+        //cmdFetcher: Return the list of groupboxes
+        public List<CmdGroup> cmdFetcher()
         {
             int i = 0;
-            List<Cmd> cmdList = new List<Cmd>();            
+            List<CmdGroup> cmdGroupList = new List<CmdGroup>();
             SQLiteConnection db = new SQLiteConnection();
             try
             {
-                db.ConnectionString = "Data Source=" + dbPath;
+                db.ConnectionString = @"Data Source=" + dbPath;
                 db.Open();
             }
             catch (System.Exception ex)
             {
                 MessageBox.Show("There was an ERROR! The error message: \n\n" + ex.ToString(), "Error");
             }
-                SQLiteCommand cmds = new SQLiteCommand();
-                cmds.Connection = db;
-                cmds.CommandText = "SELECT cmdID, cmdName, cmdByte, cmdComment FROM cmds"; 
-                SQLiteDataReader cmd = cmds.ExecuteReader();
-                while (cmd.Read())
+            SQLiteCommand gbn = new SQLiteCommand();
+            gbn.Connection = db;
+            gbn.CommandText = "SELECT DISTINCT groupboxName FROM groupboxes,groupboxes_manifest WHERE groupboxes.[groupboxID]=groupboxes_manifest.[groupboxID];";
+            SQLiteDataReader dr_gbn = gbn.ExecuteReader();
+            while (dr_gbn.Read())
+            {
+                cmdGroupList.Add(new CmdGroup());
+                cmdGroupList[i].cmdGroupName = dr_gbn["groupboxName"].ToString();
+                cmdGroupList[i].cmdList = new List<Cmd>();
+                int j = 0;
+                SQLiteCommand cmd = new SQLiteCommand();
+                cmd.Connection=db;
+                cmd.CommandText= "SELECT manifestType, manifestID, cmdName, cmdByte FROM manifest, cmds where manifest.[manifestID] IN (SELECT manifestID FROM groupboxes_manifest WHERE groupboxes_manifest.[groupboxID]=(SELECT groupboxID FROM groupboxes WHERE groupboxes.[groupboxName]=\""+cmdGroupList[i].cmdGroupName+"\")) AND cmds.[cmdID]=manifest.[cmdID]";
+                SQLiteDataReader dr_cmd=cmd.ExecuteReader();
+                while(dr_cmd.Read())
                 {
-                    cmdList.Add(new Cmd());
-                    cmdList[i].cmdID = Convert.ToInt32(cmd["cmdID"]);
-                    cmdList[i].cmdName = cmd["cmdName"].ToString();
-                    cmdList[i].cmdByte = Convert.ToInt32(cmd["cmdByte"]);
-                    cmdList[i].cmdComment = cmd["cmdComment"].ToString();
-                    cmdList[i].parameterList = new List<Parameter>();
-                    //Parameter-reader
-                    SQLiteCommand parameters = new SQLiteCommand();
-                    parameters.Connection = db;
-                    parameters.CommandText = "SELECT paramName, paramMin, paramMax, paramDefault, paramComment FROM params WHERE cmdID=" + cmdList[i].cmdID;
-                    SQLiteDataReader param = parameters.ExecuteReader();
-                    int j = 0;
-                    while (param.Read())
-                    {                        
-                        cmdList[i].parameterList.Add(new Parameter());
-                        cmdList[i].parameterList[j].paramName = param["paramName"].ToString();
-
-                        try { cmdList[i].parameterList[j].paramMin = Convert.ToInt32(param["paramMin"]); }
-                        catch (System.InvalidCastException) { cmdList[i].parameterList[j].paramMin = null; }
-
-                        try { cmdList[i].parameterList[j].paramMax = Convert.ToInt32(param["paramMax"]); }
-                        catch (System.InvalidCastException) { cmdList[i].parameterList[j].paramMax = null; }
-
-                        try { cmdList[i].parameterList[j].paramDefault = Convert.ToInt32(param["paramDefault"]); } 
-                        catch (System.InvalidCastException) { cmdList[i].parameterList[j].paramDefault = null; } 
-                       
-                        cmdList[i].parameterList[j].paramComment = param["paramComment"].ToString();
-                        j++;
+                cmdGroupList[i].cmdList.Add(new Cmd());
+                cmdGroupList[i].cmdList[j].cmdName = dr_cmd["cmdName"].ToString();
+                cmdGroupList[i].cmdList[j].cmdType = dr_cmd["manifestType"].ToString();
+                cmdGroupList[i].cmdList[j].cmdByte = Convert.ToInt32(dr_cmd["cmdByte"]);
+                
+                cmdGroupList[i].cmdList[j].parameterList = new List<Parameter>();
+                int k = 0;
+                SQLiteCommand p = new SQLiteCommand();
+                p.Connection = db;
+                p.CommandText = "SELECT parameterName, parameterMin, parameterMax, parameterDefault, parameters_cmdsOrder, manifest_parametersValue, manifest_parametersType FROM parameters_cmds, parameters, manifest_parameters WHERE parameters.[parameterID]=parameters_cmds.[parameterID] AND parameters_cmds.[cmdID]=(select cmdID FROM manifest WHERE manifest.[manifestID]=" + dr_cmd["manifestID"].ToString() + ") AND manifest_parameters.[parameter_cmdsID]=parameters_cmds.[parameters_cmdsID] AND manifest_parameters.[manifestID]=" + dr_cmd["manifestID"].ToString();
+                SQLiteDataReader dr_p = p.ExecuteReader();
+                while (dr_p.Read())
+                    {
+                        cmdGroupList[i].cmdList[j].parameterList.Add(new Parameter());
+                        cmdGroupList[i].cmdList[j].parameterList[k].parameterName = dr_p["parameterName"].ToString();
+                        cmdGroupList[i].cmdList[j].parameterList[k].parameterType= dr_p["manifest_parametersType"].ToString();
+                        try {cmdGroupList[i].cmdList[j].parameterList[k].parameterValue = Convert.ToInt32(dr_p["manifest_parametersValue"]);} 
+                        catch(System.InvalidCastException) {cmdGroupList[i].cmdList[j].parameterList[k].parameterValue=null;}
+                        try {cmdGroupList[i].cmdList[j].parameterList[k].parameterMin = Convert.ToInt32(dr_p["parameterMin"]);} 
+                        catch(System.InvalidCastException) {cmdGroupList[i].cmdList[j].parameterList[k].parameterMin=null;}
+                        try {cmdGroupList[i].cmdList[j].parameterList[k].parameterMax = Convert.ToInt32(dr_p["parameterMax"]);} 
+                        catch(System.InvalidCastException) {cmdGroupList[i].cmdList[j].parameterList[k].parameterMax=null;}
+                        try { cmdGroupList[i].cmdList[j].parameterList[k].parameterDefault = Convert.ToInt32(dr_p["parameterDefault"]); }
+                        catch (System.InvalidCastException) { cmdGroupList[i].cmdList[j].parameterList[k].parameterDefault = null; }
+                        cmdGroupList[i].cmdList[j].parameterList[k].parameterOrder = Convert.ToInt32(dr_p["parameters_cmdsOrder"]);
+                        k++;
                     }
-                    i++;
+                j++;
                 }
-            db.Close();
-            return cmdList;
-        }
-        //readByte: Return a byte, which is belong to a command - unnecessary
-        public int readByte(string cmdName)
-        {
-            int Byte = 0;
-            string Name = cmdName;
-            SQLiteConnection db = new SQLiteConnection();
-            try
-            {
-                db.ConnectionString = "Data Source=" + dbPath;
-                db.Open();
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show("There was an ERROR! The error message: \n\n" + ex.ToString(), "Error");
-            }
-            SQLiteCommand open = new SQLiteCommand();
-            open.Connection = db;
-            open.CommandText = "SELECT cmdByte FROM cmds WHERE cmdName=\""+Name+"\"";
-            SQLiteDataReader dr = open.ExecuteReader();
-            while (dr.Read())
-            {
-                Byte = Convert.ToInt32(dr["cmdByte"]);
+                i++;
             }
             db.Close();
-            return Byte;
-        }
-        //readParameters: Return a list of parameters, which is belong to a command - unnecessary
-        public List<Parameter> readParameters()
-        {
-            List<Parameter> paramList = new List<Parameter>();
-            return paramList;
+            return cmdGroupList;
         }
     }
 }

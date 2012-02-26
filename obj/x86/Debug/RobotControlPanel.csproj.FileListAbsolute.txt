@@ -27,3 +27,17 @@ D:\krisztian\development\Robot Control Panel\Robot Control Panel v0.12\project\R
 D:\krisztian\development\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\obj\x86\Debug\RobotControlPanel.SettingsForm.resources
 D:\krisztian\development\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\obj\x86\Debug\ResGen.read.1.tlog
 D:\krisztian\development\Robot Control Panel\Robot Control Panel v0.12\project\RobotControlPanel\RobotControlPanel\obj\x86\Debug\ResGen.write.1.tlog
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\bin\Debug\RobotControlPanel.exe.config
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\obj\x86\Debug\RobotControlPanel.exe
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\obj\x86\Debug\RobotControlPanel.pdb
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\obj\x86\Debug\RobotControlPanel.AboutRobotControlPanel.resources
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\obj\x86\Debug\RobotControlPanel.MainForm.resources
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\obj\x86\Debug\RobotControlPanel.Properties.Resources.resources
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\obj\x86\Debug\RobotControlPanel.SettingsForm.resources
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\obj\x86\Debug\ResGen.read.1.tlog
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\obj\x86\Debug\ResGen.write.1.tlog
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\bin\Debug\RobotControlPanel.exe
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\bin\Debug\RobotControlPanel.pdb
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\bin\Debug\System.Data.SQLite.dll
+D:\krisztian\development\robot_control_panel\robot_control_panel_v012\project\robot_control_panel\RobotControlPanel\bin\Debug\System.Data.SQLite.xml
