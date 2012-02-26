@@ -16,7 +16,7 @@ namespace RobotControlPanel
         //Instantiation of classes and important lists
         dbHandler dataBase = new dbHandler();
         List<CmdGroup> cmdGroupList = new List<CmdGroup>();
-        const List<int> baudList = new List<int>() { 921600, 460800, 230400, 115200, 57600, 38400, 19200, 9600, 4800, 2400, 1200, 300, 150, 110 };      
+        List<int> baudList = new List<int>() { 921600, 460800, 230400, 115200, 57600, 38400, 19200, 9600, 4800, 2400, 1200, 300, 150, 110 };      
         //MainForm Initialization
         public MainForm()
         {
@@ -34,7 +34,7 @@ namespace RobotControlPanel
         //----
         private void cmdReadFromDB()
         {
-            cmdGroupList = dataBase.cmdFetcher();
+            cmdGroupList = dataBase.cmdGroupFetcher();
         }
         //Menu
         //File
