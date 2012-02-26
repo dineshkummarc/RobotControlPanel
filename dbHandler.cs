@@ -94,7 +94,7 @@ namespace RobotControlPanel
             }
             SQLiteCommand cbn = new SQLiteCommand();
             cbn.Connection = db;
-            cbn.CommandText = "SELECT groupboxName, groupboxID FROM groupboxes WHERE groupboxes.[groupboxID] IN (SELECT groupboxID FROM controlmode);";
+            cbn.CommandText = "SELECT groupboxName, groupboxID FROM groupboxes WHERE groupboxes.[groupboxID] IN (SELECT groupboxID FROM controlmode)";
             SQLiteDataReader dr_cbn = cbn.ExecuteReader();
             int i = 0; while (dr_cbn.Read())
             {
