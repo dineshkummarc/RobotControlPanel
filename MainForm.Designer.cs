@@ -53,6 +53,7 @@
             this.textBoxConsole = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxControl = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.comboBoxCmdList = new System.Windows.Forms.ComboBox();
             this.groupBoxConnection = new System.Windows.Forms.GroupBox();
             this.buttonRefresh = new System.Windows.Forms.Button();
@@ -62,7 +63,6 @@
             this.labelPortList = new System.Windows.Forms.Label();
             this.comboBoxPortList = new System.Windows.Forms.ComboBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.button1 = new System.Windows.Forms.Button();
             this.mainFormMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBoxConsole.SuspendLayout();
@@ -313,6 +313,16 @@
             this.groupBoxControl.TabStop = false;
             this.groupBoxControl.Text = "Control";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(23, 81);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // comboBoxCmdList
             // 
             this.comboBoxCmdList.FormattingEnabled = true;
@@ -369,6 +379,7 @@
             // 
             // comboBoxBaudRate
             // 
+            this.comboBoxBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxBaudRate.FormattingEnabled = true;
             this.comboBoxBaudRate.Location = new System.Drawing.Point(18, 102);
             this.comboBoxBaudRate.Name = "comboBoxBaudRate";
@@ -386,6 +397,7 @@
             // 
             // comboBoxPortList
             // 
+            this.comboBoxPortList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPortList.FormattingEnabled = true;
             this.comboBoxPortList.Location = new System.Drawing.Point(18, 52);
             this.comboBoxPortList.Name = "comboBoxPortList";
@@ -395,16 +407,6 @@
             // serialPort1
             // 
             this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.DataRec);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(23, 81);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainForm
             // 
@@ -418,6 +420,7 @@
             this.MainMenuStrip = this.mainFormMenu;
             this.Name = "MainForm";
             this.Text = "Robot Control Panel";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.mainFormMenu.ResumeLayout(false);
             this.mainFormMenu.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);

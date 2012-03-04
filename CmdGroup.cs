@@ -6,10 +6,12 @@ namespace RobotControlPanel
 {
     class CmdGroup
     {
-        private string cmdgroupname;
+        private int groupboxid;
+        private string groupboxname;
         private List<Cmd> cmdlist;
 
-        public string cmdGroupName { get { return this.cmdgroupname; } set { this.cmdgroupname = value; } }
+        public int groupboxID { get { return this.groupboxid; } set { this.groupboxid = value; } }
+        public string groupboxName { get { return this.groupboxname; } set { this.groupboxname = value; } }
         public List<Cmd> cmdList { get { return this.cmdlist; } set { this.cmdlist = value; } }
 
     }
@@ -37,13 +39,13 @@ namespace RobotControlPanel
     }
     class Cmd
     {
-        //private int cmdid;
+        private int cmdid;
         private string cmdname, cmdtype;
         private int cmdbyte;
         private List<Parameter> parameterlist;
         //protected string cmdcomment;
 
-        //public int cmdID { get { return this.cmdid; } set{this.cmdid=value;} }
+        public int cmdID { get { return this.cmdid; } set{this.cmdid=value;} }
         public string cmdName { get { return this.cmdname; } set { this.cmdname = value; } }
         public string cmdType { get { return this.cmdtype; } set { this.cmdtype = value; } }
         public int cmdByte { get { return this.cmdbyte; } set { this.cmdbyte = value; } }
@@ -56,10 +58,11 @@ namespace RobotControlPanel
     {
 
         private string parametername, parametertype;
-        private int parameterorder;
+        private int parameterid, parameterorder;
         private int? parametermin, parametermax, parameterdefault, parametervalue;
         //protected string paramcomment;
 
+        public int parameterID { get { return this.parameterid; } set { this.parameterid = value; } }
         public string parameterName { get { return this.parametername; } set { this.parametername = value; } }
         public int parameterOrder { get { return this.parameterorder; } set { this.parameterorder = value; } }
         public int? parameterMin { get { return this.parametermin; } set { this.parametermin = value; } }

@@ -37,11 +37,11 @@ namespace RobotControlPanel
             int i = 0; while (dr_gbn.Read())            
             {
                 cmdGroupList.Add(new CmdGroup());
-                cmdGroupList[i].cmdGroupName = dr_gbn["groupboxName"].ToString();
+                cmdGroupList[i].groupboxName = dr_gbn["groupboxName"].ToString();
                 cmdGroupList[i].cmdList = new List<Cmd>();
                 SQLiteCommand cmd = new SQLiteCommand();
                 cmd.Connection=db;
-                cmd.CommandText= "SELECT manifestType, manifestID, cmdName, cmdByte FROM manifest, cmds where manifest.[manifestID] IN (SELECT manifestID FROM groupboxes_manifest WHERE groupboxes_manifest.[groupboxID]=(SELECT groupboxID FROM groupboxes WHERE groupboxes.[groupboxName]=\""+cmdGroupList[i].cmdGroupName+"\")) AND cmds.[cmdID]=manifest.[cmdID]";
+                cmd.CommandText= "SELECT manifestType, manifestID, cmdName, cmdByte FROM manifest, cmds where manifest.[manifestID] IN (SELECT manifestID FROM groupboxes_manifest WHERE groupboxes_manifest.[groupboxID]=(SELECT groupboxID FROM groupboxes WHERE groupboxes.[groupboxName]=\""+cmdGroupList[i].groupboxName+"\")) AND cmds.[cmdID]=manifest.[cmdID]";
                 SQLiteDataReader dr_cmd=cmd.ExecuteReader();
                 int j = 0;
                 while(dr_cmd.Read())
