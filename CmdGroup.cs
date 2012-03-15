@@ -6,9 +6,9 @@ namespace RobotControlPanel
 {
     class CmdGroup
     {
-        private int groupboxid;
-        private string groupboxname;
-        private List<Cmd> cmdlist;
+        protected int groupboxid;
+        protected string groupboxname;
+        protected List<Cmd> cmdlist;
 
         public int groupboxID { get { return this.groupboxid; } set { this.groupboxid = value; } }
         public string groupboxName { get { return this.groupboxname; } set { this.groupboxname = value; } }
@@ -17,18 +17,22 @@ namespace RobotControlPanel
     }
     class Controlbox
     {
+        private int controlboxid;
         private string controlboxname;
         private List<ControlboxMode> modes;
 
+        public int controlboxID { get { return this.controlboxid; } set { this.controlboxid = value; } }
         public string controlboxName { get { return this.controlboxname; } set { this.controlboxname = value; } }
         public List<ControlboxMode> Modes { get { return this.modes; } set { this.modes = value; } }
     }
     class ControlboxMode
     {
+        private int controlboxmodeid;
         private string conttrolboxmodename;
         private int controlboxmodeorder;
         private Cmd up, down, left, right, stop;
 
+        public int controlboxModeID { get { return this.controlboxmodeid; } set { this.controlboxmodeid = value; } }
         public string controlboxModeName { get { return this.conttrolboxmodename; } set { this.conttrolboxmodename = value; } }
         public int controlboxModeOrder { get { return this.controlboxmodeorder; } set { this.controlboxmodeorder = value; } }
         public Cmd Up { get { return this.up; } set { this.up = value; } }
@@ -55,12 +59,11 @@ namespace RobotControlPanel
 
     }
     class Parameter
-    {
-
+    {        
         private string parametername, parametertype;
         private int parameterid, parameterorder;
         private int? parametermin, parametermax, parameterdefault, parametervalue;
-        //protected string paramcomment;
+        //protected string paramcomment;       
 
         public int parameterID { get { return this.parameterid; } set { this.parameterid = value; } }
         public string parameterName { get { return this.parametername; } set { this.parametername = value; } }
