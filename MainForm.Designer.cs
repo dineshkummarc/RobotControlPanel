@@ -66,8 +66,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.comboBoxCmdList = new System.Windows.Forms.ComboBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.mainFormMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControlTop.SuspendLayout();
@@ -399,8 +397,6 @@
             // 
             this.tabControlBottom.Alignment = System.Windows.Forms.TabAlignment.Bottom;
             this.tabControlBottom.Controls.Add(this.tabPageControl);
-            this.tabControlBottom.Controls.Add(this.tabPage1);
-            this.tabControlBottom.Controls.Add(this.tabPage2);
             this.tabControlBottom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlBottom.Location = new System.Drawing.Point(0, 0);
             this.tabControlBottom.Margin = new System.Windows.Forms.Padding(0);
@@ -452,26 +448,6 @@
             // serialPort1
             // 
             this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.DataRec);
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 4);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(570, 175);
-            this.tabPage1.TabIndex = 1;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 4);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(570, 175);
-            this.tabPage2.TabIndex = 2;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -546,8 +522,6 @@
         private System.Windows.Forms.TabPage tabPageConsole;
         private System.Windows.Forms.TabControl tabControlBottom;
         private System.Windows.Forms.TabPage tabPageControl;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 
