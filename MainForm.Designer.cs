@@ -38,7 +38,7 @@
             this.toolStripMenuItemClose = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAboutRobotControlPanelT = new System.Windows.Forms.ToolStripMenuItem();
             this.openDB = new System.Windows.Forms.OpenFileDialog();
             this.db = new System.Data.SQLite.SQLiteConnection();
@@ -46,7 +46,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControlTop = new System.Windows.Forms.TabControl();
             this.tabPageConsole = new System.Windows.Forms.TabPage();
-            this.groupBoxConsole = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.radioButtonNumbers = new System.Windows.Forms.RadioButton();
@@ -54,9 +53,6 @@
             this.buttonClear = new System.Windows.Forms.Button();
             this.textBoxConsole = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBoxControl = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.comboBoxCmdList = new System.Windows.Forms.ComboBox();
             this.groupBoxConnection = new System.Windows.Forms.GroupBox();
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.buttonConnect = new System.Windows.Forms.Button();
@@ -64,23 +60,27 @@
             this.comboBoxBaudRate = new System.Windows.Forms.ComboBox();
             this.labelPortList = new System.Windows.Forms.Label();
             this.comboBoxPortList = new System.Windows.Forms.ComboBox();
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.tabControlBottom = new System.Windows.Forms.TabControl();
             this.tabPageControl = new System.Windows.Forms.TabPage();
+            this.groupBoxControl = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.comboBoxCmdList = new System.Windows.Forms.ComboBox();
+            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.mainFormMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControlTop.SuspendLayout();
             this.tabPageConsole.SuspendLayout();
-            this.groupBoxConsole.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.groupBoxControl.SuspendLayout();
             this.groupBoxConnection.SuspendLayout();
             this.tabControlBottom.SuspendLayout();
             this.tabPageControl.SuspendLayout();
+            this.groupBoxControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainFormMenu
@@ -89,11 +89,11 @@
             this.mainFormMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemFile,
             this.toolStripMenuItemEdit,
-            this.toolStripMenuItemAbout});
+            this.toolStripMenuItemHelp});
             this.mainFormMenu.Location = new System.Drawing.Point(0, 0);
             this.mainFormMenu.Name = "mainFormMenu";
             this.mainFormMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mainFormMenu.Size = new System.Drawing.Size(694, 24);
+            this.mainFormMenu.Size = new System.Drawing.Size(784, 24);
             this.mainFormMenu.TabIndex = 0;
             this.mainFormMenu.Text = "mainFormMenu";
             // 
@@ -153,13 +153,13 @@
             this.toolStripMenuItemSettings.Text = "Settings";
             this.toolStripMenuItemSettings.Click += new System.EventHandler(this.toolStripMenuItemSettings_Click);
             // 
-            // toolStripMenuItemAbout
+            // toolStripMenuItemHelp
             // 
-            this.toolStripMenuItemAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemAboutRobotControlPanelT});
-            this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(52, 20);
-            this.toolStripMenuItemAbout.Text = "About";
+            this.toolStripMenuItemHelp.Name = "toolStripMenuItemHelp";
+            this.toolStripMenuItemHelp.Size = new System.Drawing.Size(44, 20);
+            this.toolStripMenuItemHelp.Text = "Help";
             // 
             // toolStripMenuItemAboutRobotControlPanelT
             // 
@@ -182,9 +182,9 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 531);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 540);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(694, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -201,7 +201,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(694, 507);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 516);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // tabControlTop
@@ -211,29 +211,19 @@
             this.tabControlTop.Location = new System.Drawing.Point(3, 3);
             this.tabControlTop.Name = "tabControlTop";
             this.tabControlTop.SelectedIndex = 0;
-            this.tabControlTop.Size = new System.Drawing.Size(688, 298);
+            this.tabControlTop.Size = new System.Drawing.Size(778, 303);
             this.tabControlTop.TabIndex = 1;
             // 
             // tabPageConsole
             // 
-            this.tabPageConsole.Controls.Add(this.groupBoxConsole);
+            this.tabPageConsole.Controls.Add(this.tableLayoutPanel2);
             this.tabPageConsole.Location = new System.Drawing.Point(4, 22);
             this.tabPageConsole.Name = "tabPageConsole";
             this.tabPageConsole.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageConsole.Size = new System.Drawing.Size(680, 272);
+            this.tabPageConsole.Size = new System.Drawing.Size(770, 277);
             this.tabPageConsole.TabIndex = 0;
             this.tabPageConsole.Text = "Console";
             this.tabPageConsole.UseVisualStyleBackColor = true;
-            // 
-            // groupBoxConsole
-            // 
-            this.groupBoxConsole.Controls.Add(this.tableLayoutPanel2);
-            this.groupBoxConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxConsole.Location = new System.Drawing.Point(3, 3);
-            this.groupBoxConsole.Name = "groupBoxConsole";
-            this.groupBoxConsole.Size = new System.Drawing.Size(674, 266);
-            this.groupBoxConsole.TabIndex = 0;
-            this.groupBoxConsole.TabStop = false;
             // 
             // tableLayoutPanel2
             // 
@@ -243,18 +233,18 @@
             this.tableLayoutPanel2.Controls.Add(this.splitContainer1, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.textBoxConsole, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(668, 247);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(764, 271);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 224);
+            this.splitContainer1.Location = new System.Drawing.Point(3, 248);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -265,8 +255,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.buttonClear);
-            this.splitContainer1.Size = new System.Drawing.Size(662, 20);
-            this.splitContainer1.SplitterDistance = 323;
+            this.splitContainer1.Size = new System.Drawing.Size(758, 20);
+            this.splitContainer1.SplitterDistance = 369;
             this.splitContainer1.TabIndex = 0;
             // 
             // radioButtonNumbers
@@ -296,7 +286,7 @@
             // buttonClear
             // 
             this.buttonClear.Dock = System.Windows.Forms.DockStyle.Right;
-            this.buttonClear.Location = new System.Drawing.Point(260, 0);
+            this.buttonClear.Location = new System.Drawing.Point(310, 0);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(75, 20);
             this.buttonClear.TabIndex = 0;
@@ -314,7 +304,7 @@
             this.textBoxConsole.Name = "textBoxConsole";
             this.textBoxConsole.ReadOnly = true;
             this.textBoxConsole.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.textBoxConsole.Size = new System.Drawing.Size(662, 215);
+            this.textBoxConsole.Size = new System.Drawing.Size(758, 239);
             this.textBoxConsole.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -325,42 +315,12 @@
             this.tableLayoutPanel3.Controls.Add(this.groupBoxConnection, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.tabControlBottom, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 307);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 312);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(688, 197);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(778, 201);
             this.tableLayoutPanel3.TabIndex = 1;
-            // 
-            // groupBoxControl
-            // 
-            this.groupBoxControl.Controls.Add(this.button1);
-            this.groupBoxControl.Controls.Add(this.comboBoxCmdList);
-            this.groupBoxControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxControl.Location = new System.Drawing.Point(3, 3);
-            this.groupBoxControl.Name = "groupBoxControl";
-            this.groupBoxControl.Size = new System.Drawing.Size(474, 165);
-            this.groupBoxControl.TabIndex = 1;
-            this.groupBoxControl.TabStop = false;
-            this.groupBoxControl.Text = "Control";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(23, 81);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // comboBoxCmdList
-            // 
-            this.comboBoxCmdList.FormattingEnabled = true;
-            this.comboBoxCmdList.Location = new System.Drawing.Point(23, 28);
-            this.comboBoxCmdList.Name = "comboBoxCmdList";
-            this.comboBoxCmdList.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxCmdList.TabIndex = 0;
             // 
             // groupBoxConnection
             // 
@@ -371,9 +331,9 @@
             this.groupBoxConnection.Controls.Add(this.labelPortList);
             this.groupBoxConnection.Controls.Add(this.comboBoxPortList);
             this.groupBoxConnection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxConnection.Location = new System.Drawing.Point(491, 3);
+            this.groupBoxConnection.Location = new System.Drawing.Point(581, 3);
             this.groupBoxConnection.Name = "groupBoxConnection";
-            this.groupBoxConnection.Size = new System.Drawing.Size(194, 191);
+            this.groupBoxConnection.Size = new System.Drawing.Size(194, 195);
             this.groupBoxConnection.TabIndex = 2;
             this.groupBoxConnection.TabStop = false;
             this.groupBoxConnection.Text = "Connection";
@@ -435,20 +395,18 @@
             this.comboBoxPortList.Size = new System.Drawing.Size(121, 21);
             this.comboBoxPortList.TabIndex = 0;
             // 
-            // serialPort1
-            // 
-            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.DataRec);
-            // 
             // tabControlBottom
             // 
             this.tabControlBottom.Alignment = System.Windows.Forms.TabAlignment.Bottom;
             this.tabControlBottom.Controls.Add(this.tabPageControl);
+            this.tabControlBottom.Controls.Add(this.tabPage1);
+            this.tabControlBottom.Controls.Add(this.tabPage2);
             this.tabControlBottom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlBottom.Location = new System.Drawing.Point(0, 0);
             this.tabControlBottom.Margin = new System.Windows.Forms.Padding(0);
             this.tabControlBottom.Name = "tabControlBottom";
             this.tabControlBottom.SelectedIndex = 0;
-            this.tabControlBottom.Size = new System.Drawing.Size(488, 197);
+            this.tabControlBottom.Size = new System.Drawing.Size(578, 201);
             this.tabControlBottom.TabIndex = 3;
             // 
             // tabPageControl
@@ -457,16 +415,69 @@
             this.tabPageControl.Location = new System.Drawing.Point(4, 4);
             this.tabPageControl.Name = "tabPageControl";
             this.tabPageControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageControl.Size = new System.Drawing.Size(480, 171);
+            this.tabPageControl.Size = new System.Drawing.Size(570, 175);
             this.tabPageControl.TabIndex = 0;
             this.tabPageControl.Text = "Control";
             this.tabPageControl.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxControl
+            // 
+            this.groupBoxControl.Controls.Add(this.button1);
+            this.groupBoxControl.Controls.Add(this.comboBoxCmdList);
+            this.groupBoxControl.Location = new System.Drawing.Point(0, 6);
+            this.groupBoxControl.Name = "groupBoxControl";
+            this.groupBoxControl.Size = new System.Drawing.Size(161, 155);
+            this.groupBoxControl.TabIndex = 1;
+            this.groupBoxControl.TabStop = false;
+            this.groupBoxControl.Text = "Control";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(23, 81);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // comboBoxCmdList
+            // 
+            this.comboBoxCmdList.FormattingEnabled = true;
+            this.comboBoxCmdList.Location = new System.Drawing.Point(23, 28);
+            this.comboBoxCmdList.Name = "comboBoxCmdList";
+            this.comboBoxCmdList.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxCmdList.TabIndex = 0;
+            // 
+            // serialPort1
+            // 
+            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.DataRec);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 4);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(570, 175);
+            this.tabPage1.TabIndex = 1;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 4);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(570, 175);
+            this.tabPage2.TabIndex = 2;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(694, 553);
+            this.ClientSize = new System.Drawing.Size(784, 562);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.mainFormMenu);
@@ -480,7 +491,6 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tabControlTop.ResumeLayout(false);
             this.tabPageConsole.ResumeLayout(false);
-            this.groupBoxConsole.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -488,11 +498,11 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
-            this.groupBoxControl.ResumeLayout(false);
             this.groupBoxConnection.ResumeLayout(false);
             this.groupBoxConnection.PerformLayout();
             this.tabControlBottom.ResumeLayout(false);
             this.tabPageControl.ResumeLayout(false);
+            this.groupBoxControl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -511,10 +521,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCloseDatabase;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemClose;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHelp;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAboutRobotControlPanelT;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.GroupBox groupBoxConsole;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.RadioButton radioButtonNumbers;
@@ -537,6 +546,8 @@
         private System.Windows.Forms.TabPage tabPageConsole;
         private System.Windows.Forms.TabControl tabControlBottom;
         private System.Windows.Forms.TabPage tabPageControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 

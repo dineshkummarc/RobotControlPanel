@@ -133,7 +133,7 @@ namespace RobotControlPanel
         {
             return metadata1 + c1;
         }
-        //dbCheck
+        //dbCheck: this cmdstrings and fieldlist needed to chechking database integrity and compatibility
         public static string[] dbcheck_fieldlist = { "count(*)" };
         public static string[] dbcheck_tablelist = { "cmds", "controlmode", "groupboxes", "groupboxes_manifest", "manifest", "manifest_parameter", "metadata", "parameter_cmd", "parameters", "settings", "sign_syntax", "signs", "syntax" };       
         public static string[] dbcheck_sql = 
