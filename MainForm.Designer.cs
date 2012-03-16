@@ -44,6 +44,8 @@
             this.db = new System.Data.SQLite.SQLiteConnection();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tabControlTop = new System.Windows.Forms.TabControl();
+            this.tabPageConsole = new System.Windows.Forms.TabPage();
             this.groupBoxConsole = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -63,8 +65,12 @@
             this.labelPortList = new System.Windows.Forms.Label();
             this.comboBoxPortList = new System.Windows.Forms.ComboBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.tabControlBottom = new System.Windows.Forms.TabControl();
+            this.tabPageControl = new System.Windows.Forms.TabPage();
             this.mainFormMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tabControlTop.SuspendLayout();
+            this.tabPageConsole.SuspendLayout();
             this.groupBoxConsole.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -73,6 +79,8 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBoxControl.SuspendLayout();
             this.groupBoxConnection.SuspendLayout();
+            this.tabControlBottom.SuspendLayout();
+            this.tabPageControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainFormMenu
@@ -184,10 +192,11 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.groupBoxConsole, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tabControlTop, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
@@ -195,16 +204,36 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(694, 507);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
+            // tabControlTop
+            // 
+            this.tabControlTop.Controls.Add(this.tabPageConsole);
+            this.tabControlTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlTop.Location = new System.Drawing.Point(3, 3);
+            this.tabControlTop.Name = "tabControlTop";
+            this.tabControlTop.SelectedIndex = 0;
+            this.tabControlTop.Size = new System.Drawing.Size(688, 298);
+            this.tabControlTop.TabIndex = 1;
+            // 
+            // tabPageConsole
+            // 
+            this.tabPageConsole.Controls.Add(this.groupBoxConsole);
+            this.tabPageConsole.Location = new System.Drawing.Point(4, 22);
+            this.tabPageConsole.Name = "tabPageConsole";
+            this.tabPageConsole.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageConsole.Size = new System.Drawing.Size(680, 272);
+            this.tabPageConsole.TabIndex = 0;
+            this.tabPageConsole.Text = "Console";
+            this.tabPageConsole.UseVisualStyleBackColor = true;
+            // 
             // groupBoxConsole
             // 
             this.groupBoxConsole.Controls.Add(this.tableLayoutPanel2);
             this.groupBoxConsole.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxConsole.Location = new System.Drawing.Point(3, 3);
             this.groupBoxConsole.Name = "groupBoxConsole";
-            this.groupBoxConsole.Size = new System.Drawing.Size(688, 298);
+            this.groupBoxConsole.Size = new System.Drawing.Size(674, 266);
             this.groupBoxConsole.TabIndex = 0;
             this.groupBoxConsole.TabStop = false;
-            this.groupBoxConsole.Text = "Console";
             // 
             // tableLayoutPanel2
             // 
@@ -219,13 +248,13 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(682, 279);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(668, 247);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 256);
+            this.splitContainer1.Location = new System.Drawing.Point(3, 224);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -236,8 +265,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.buttonClear);
-            this.splitContainer1.Size = new System.Drawing.Size(676, 20);
-            this.splitContainer1.SplitterDistance = 331;
+            this.splitContainer1.Size = new System.Drawing.Size(662, 20);
+            this.splitContainer1.SplitterDistance = 323;
             this.splitContainer1.TabIndex = 0;
             // 
             // radioButtonNumbers
@@ -267,7 +296,7 @@
             // buttonClear
             // 
             this.buttonClear.Dock = System.Windows.Forms.DockStyle.Right;
-            this.buttonClear.Location = new System.Drawing.Point(266, 0);
+            this.buttonClear.Location = new System.Drawing.Point(260, 0);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(75, 20);
             this.buttonClear.TabIndex = 0;
@@ -285,7 +314,7 @@
             this.textBoxConsole.Name = "textBoxConsole";
             this.textBoxConsole.ReadOnly = true;
             this.textBoxConsole.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.textBoxConsole.Size = new System.Drawing.Size(676, 247);
+            this.textBoxConsole.Size = new System.Drawing.Size(662, 215);
             this.textBoxConsole.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -293,8 +322,8 @@
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel3.Controls.Add(this.groupBoxControl, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.groupBoxConnection, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.tabControlBottom, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 307);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -310,7 +339,7 @@
             this.groupBoxControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxControl.Location = new System.Drawing.Point(3, 3);
             this.groupBoxControl.Name = "groupBoxControl";
-            this.groupBoxControl.Size = new System.Drawing.Size(482, 191);
+            this.groupBoxControl.Size = new System.Drawing.Size(474, 165);
             this.groupBoxControl.TabIndex = 1;
             this.groupBoxControl.TabStop = false;
             this.groupBoxControl.Text = "Control";
@@ -410,6 +439,29 @@
             // 
             this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.DataRec);
             // 
+            // tabControlBottom
+            // 
+            this.tabControlBottom.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.tabControlBottom.Controls.Add(this.tabPageControl);
+            this.tabControlBottom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlBottom.Location = new System.Drawing.Point(0, 0);
+            this.tabControlBottom.Margin = new System.Windows.Forms.Padding(0);
+            this.tabControlBottom.Name = "tabControlBottom";
+            this.tabControlBottom.SelectedIndex = 0;
+            this.tabControlBottom.Size = new System.Drawing.Size(488, 197);
+            this.tabControlBottom.TabIndex = 3;
+            // 
+            // tabPageControl
+            // 
+            this.tabPageControl.Controls.Add(this.groupBoxControl);
+            this.tabPageControl.Location = new System.Drawing.Point(4, 4);
+            this.tabPageControl.Name = "tabPageControl";
+            this.tabPageControl.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageControl.Size = new System.Drawing.Size(480, 171);
+            this.tabPageControl.TabIndex = 0;
+            this.tabPageControl.Text = "Control";
+            this.tabPageControl.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -426,6 +478,8 @@
             this.mainFormMenu.ResumeLayout(false);
             this.mainFormMenu.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tabControlTop.ResumeLayout(false);
+            this.tabPageConsole.ResumeLayout(false);
             this.groupBoxConsole.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
@@ -437,6 +491,8 @@
             this.groupBoxControl.ResumeLayout(false);
             this.groupBoxConnection.ResumeLayout(false);
             this.groupBoxConnection.PerformLayout();
+            this.tabControlBottom.ResumeLayout(false);
+            this.tabPageControl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -477,6 +533,10 @@
         private System.Windows.Forms.GroupBox groupBoxControl;
         private System.Windows.Forms.ComboBox comboBoxCmdList;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabControl tabControlTop;
+        private System.Windows.Forms.TabPage tabPageConsole;
+        private System.Windows.Forms.TabControl tabControlBottom;
+        private System.Windows.Forms.TabPage tabPageControl;
     }
 }
 
