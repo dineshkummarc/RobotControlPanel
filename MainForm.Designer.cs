@@ -77,12 +77,14 @@
             // 
             // mainFormMenu
             // 
+            this.mainFormMenu.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.mainFormMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemFile,
             this.toolStripMenuItemEdit,
             this.toolStripMenuItemAbout});
             this.mainFormMenu.Location = new System.Drawing.Point(0, 0);
             this.mainFormMenu.Name = "mainFormMenu";
+            this.mainFormMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.mainFormMenu.Size = new System.Drawing.Size(694, 24);
             this.mainFormMenu.TabIndex = 0;
             this.mainFormMenu.Text = "mainFormMenu";

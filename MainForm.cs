@@ -14,8 +14,12 @@ namespace RobotControlPanel
     public partial class MainForm : Form
     {
         //Instantiation of classes and important lists
-        newdbHandler dataBase = new newdbHandler();
-        List<Controlbox> cmdGroupList = new List<Controlbox>();
+        dbHandler dataBase = new dbHandler();
+        List<CmdGroup> cmdGroupList = new List<CmdGroup>();
+        List<Controlbox> controlBoxList = new List<Controlbox>();
+        Settings set = new Settings();
+        List<Metadata> meta = new List<Metadata>();
+        List<Syntax> syn = new List<Syntax>();
         string test=String.Empty;
         List<int> baudList = new List<int>() { 921600, 460800, 230400, 115200, 57600, 38400, 19200, 9600, 4800, 2400, 1200, 300, 150, 110 };      
         //MainForm Initialization
@@ -35,7 +39,11 @@ namespace RobotControlPanel
         //----
         private void cmdReadFromDB()
         {
-            cmdGroupList = dataBase.readControlBox();
+            cmdGroupList = dataBase.readGroupboxList();
+            controlBoxList = dataBase.readControlBoxList();
+            set = dataBase.readSettings();
+            meta = dataBase.readMetadataList();
+            syn = dataBase.readSyntaxList();
             //test = dataBase.testread();
             //MessageBox.Show(test);
         }
