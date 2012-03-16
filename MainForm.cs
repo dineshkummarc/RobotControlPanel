@@ -60,7 +60,10 @@ namespace RobotControlPanel
         //Open, FileOK
         private void openDB_FileOk(object sender, CancelEventArgs e)
         {
-            dataBase.SetdbPath(openDB.FileName);
+            if (dataBase.dbCheck(openDB.FileName))
+            {
+                dataBase.SetdbPath(openDB.FileName);
+            }
         }
         //Close database
         private void closeDatabaseToolStripMenuItem_Click(object sender, EventArgs e)

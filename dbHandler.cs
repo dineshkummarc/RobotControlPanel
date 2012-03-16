@@ -5,6 +5,7 @@ using System.Text;
 using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
+using System.IO;
 
 namespace RobotControlPanel
 {
@@ -25,6 +26,45 @@ namespace RobotControlPanel
         public void SetdbPath(string dbPath)
         {
             this.dbPath = dbPath;
+        }
+        public bool dbCheck(string tempPath)
+        {
+            if (dbReader(tempPath, Cmdstring.dbcheck_integrity, Cmdstring.dbcheck_integrity_fieldlist).ToString() == "ok")
+            {
+                string st;
+                int i = 0;
+                foreach (string table in Cmdstring.dbcheck_tablelist)
+                {
+                    if (Convert.ToBoolean(dbReader(tempPath, Cmdstring.dbcheck(table), Cmdstring.dbcheck_fieldlist)))
+                    {
+                        st = (dbReader(tempPath, Cmdstring.dbcheck_checktable(table), Cmdstring.dbcheck_checktable_fieldlist).ToString());
+                        st = st.Replace("\r\n", "");
+                        st = st.Replace("  ", "");
+                        if (st != Cmdstring.dbcheck_sql[i])
+                        {
+                            MessageBox.Show("Selected database isn't usable. It is probably damaged or made not for this software. Try another database!", "Database error");
+                            return false;
+                        }
+                        i++;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Database isn't contain neccessary data. It is probably damaged or made not for this software. Try another database!", "Database error");
+                        return false;
+                    }
+                }
+                if (dbReader(tempPath, Cmdstring.dbcheck_software, Cmdstring.dbcheck_software_fieldlist).ToString() != "Robot Control Panel v0.12")
+                {
+                    MessageBox.Show("Database seems to be usable, but it made not for this software, or made with earlier version of this software. Use it own risk!", "Database warning");
+                    return true;
+                }
+                else return true;
+            }
+            else
+            {
+                MessageBox.Show("Database damaged. Try another database!", "Database error");
+                return false;
+            }
         }
         //readGroupboxList: return lists of groupboxes, 
         //every groupbox contains buttons or comboboxes, its linked to a command and that command's parameters
@@ -158,7 +198,34 @@ namespace RobotControlPanel
             }
             db.Close();
             return r;
-        }    
+        }
+        private object dbReader(string tempPath, string cmdstring, string[] fieldlist)
+        {
+            object r = new object();
+            SQLiteConnection db = new SQLiteConnection();
+            try
+            {
+                db.ConnectionString = @"Data Source=" + tempPath;
+                db.Open();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
+            SQLiteCommand cmd = new SQLiteCommand();
+            cmd.Connection = db;
+            cmd.CommandText = cmdstring;
+            SQLiteDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                foreach (string field in fieldlist)
+                {
+                    r = dr[field];
+                }
+            }
+            db.Close();
+            return r;
+        }  
         //readSyntax: read one of the command's syntax, which will send to port
         //it need syntaxID of the finded syntax
         private Syntax readSyntax(string syntaxID)
