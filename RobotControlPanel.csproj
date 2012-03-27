@@ -71,8 +71,9 @@
     <Compile Include="AboutRobotControlPanel.Designer.cs">
       <DependentUpon>AboutRobotControlPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddControls.cs" />
     <Compile Include="Cmdstring.cs" />
-    <Compile Include="CmdGroup.cs" />
+    <Compile Include="Groupbox.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,7 +83,6 @@
     <Compile Include="dbHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs" />
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -9,16 +9,15 @@ using System.IO;
 
 namespace RobotControlPanel
 {
-    interface IdbHandler
-    {
-        void SetdbPath(string dbPath);
-        List<CmdGroup> readGroupboxList();
-        List<Controlbox> readControlBoxList();
-        Settings readSettings();
-        List<Syntax> readSyntaxList();
-        List<Metadata> readMetadataList();
-    }
-    class dbHandler : IdbHandler
+    //interface IdbHandler
+    //{
+    //    void SetdbPath(string dbPath);
+    //    List<Groupbox> readGroupboxList();
+    //    Settings readSettings();
+    //    List<Syntax> readSyntaxList();
+    //    List<Metadata> readMetadataList();
+    //}
+    class dbHandler// : IdbHandler
     {
         private string dbPath;
         
@@ -27,6 +26,7 @@ namespace RobotControlPanel
         {
             this.dbPath = dbPath;
         }
+        //dbCheck: checking selected database for inconsistency and incompatibility issues
         public bool dbCheck(string tempPath)
         {
             if (dbReader(tempPath, Cmdstring.dbcheck_integrity, Cmdstring.dbcheck_integrity_fieldlist).ToString() == "ok")
@@ -38,8 +38,6 @@ namespace RobotControlPanel
                     if (Convert.ToBoolean(dbReader(tempPath, Cmdstring.dbcheck(table), Cmdstring.dbcheck_fieldlist)))
                     {
                         st = (dbReader(tempPath, Cmdstring.dbcheck_checktable(table), Cmdstring.dbcheck_checktable_fieldlist).ToString());
-                        st = st.Replace("\r\n", "");
-                        st = st.Replace("  ", "");
                         if (st != Cmdstring.dbcheck_sql[i])
                         {
                             MessageBox.Show("Selected database isn't usable. It is probably damaged or made not for this software. Try another database!", "Database error");
@@ -66,24 +64,119 @@ namespace RobotControlPanel
                 return false;
             }
         }
-        //readGroupboxList: return lists of groupboxes, 
-        //every groupbox contains buttons or comboboxes, its linked to a command and that command's parameters
-        public List<CmdGroup> readGroupboxList()
+        ////DO NOT DELETE THIS
+        ////sqlReader: this method use only debugging. It is read normal db's sql-syntax and write to a txt file.
+        //public void sqlReader(string tempPath)
+        //{
+        //    MessageBox.Show("Press OK to start SQLReader!");
+        //    FileStream fs = new FileStream(@"sql.txt",FileMode.Create, FileAccess.Write, FileShare.None);
+        //    StreamWriter sw = new StreamWriter(fs);
+        //    string st;
+        //    foreach (object table in dbReader(tempPath, Cmdstring.tbl_name, Cmdstring.tbl_name_fieldlist))
+        //    {
+        //        st = dbReader(tempPath, Cmdstring.sqlread(table.ToString()), Cmdstring.sqlread_fieldlist)[0].ToString();
+        //        sw.WriteLine(st);
+        //    }
+        //    sw.Close();
+        //    fs.Close();
+        //    MessageBox.Show("Operation success!");
+        //}
+
+        //dbReader: Read from database, it need a cmdstring and a fieldlist which belongs to that actually used cmdstring
+        //Return lists of the queried object, which uncasted, following use you must cast to usable datatypes.
+        private List<object> dbReader(string cmdstring, string[] fieldlist)
         {
-            List<CmdGroup> groupboxlist = new List<CmdGroup>();
-            int i = 0;
-            foreach (object groupboxID in dbReader(Cmdstring.groupboxid, Cmdstring.groupboxid_fieldlist))
+            List<object> r = new List<object>();
+            SQLiteConnection db = new SQLiteConnection();
+            try
             {
-                groupboxlist.Add(readGroupbox(groupboxID.ToString()));
-                groupboxlist[i].cmdList = new List<Cmd>();
-                int j = 0;
-                foreach (object manifestID in dbReader(Cmdstring.manifestid(groupboxID.ToString()), Cmdstring.manifestid_fieldlist))
+                db.ConnectionString = @"Data Source=" + dbPath;
+                db.Open();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
+            SQLiteCommand cmd = new SQLiteCommand();
+            cmd.Connection = db;
+            cmd.CommandText = cmdstring;
+            SQLiteDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                foreach (string field in fieldlist)
                 {
-                    groupboxlist[i].cmdList.Add(readCmd(manifestID.ToString()));
-                    groupboxlist[i].cmdList[j].parameterList = new List<Parameter>();
-                    foreach (object parameters_cmdsID in dbReader(Cmdstring.parameters_cmdsid(groupboxlist[i].cmdList[j].cmdID.ToString()), Cmdstring.parameters_cmdsid_fieldlist))
+                    r.Add(dr[field]);
+                }
+            }
+            db.Close();
+            return r;
+        }
+        //DO NOT DELETE THIS
+        //private List<object> dbReader(string tempPath, string cmdstring, string[] fieldlist)
+        //{
+        //    List<object> r = new List<object>();
+        private object dbReader(string tempPath, string cmdstring, string[] fieldlist)
+        {
+            object r = new object();
+            SQLiteConnection db = new SQLiteConnection();
+            try
+            {
+                db.ConnectionString = @"Data Source=" + tempPath;
+                db.Open();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
+            SQLiteCommand cmd = new SQLiteCommand();
+            cmd.Connection = db;
+            cmd.CommandText = cmdstring;
+            SQLiteDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                foreach (string field in fieldlist)
+                {
+                    r=dr[field];
+                }
+            }
+            db.Close();
+            return r;
+        }
+        //readGroupboxList
+        public List<Groupbox> readGroupboxList()
+        {
+            List<Groupbox> groupboxlist = new List<Groupbox>();
+            int i=0;
+            foreach (object groupboxid in dbReader(Cmdstring.groupboxid, Cmdstring.groupboxid_filedlist))
+            {
+                groupboxlist.Add(readGroupbox(groupboxid.ToString()));
+                groupboxlist[i].Mode=new List<Mode>();
+                int j = 0;
+                foreach (object modeid in dbReader(Cmdstring.modeid(groupboxid.ToString()), Cmdstring.modeid_fieldlist))
+                {
+                    groupboxlist[i].Mode.Add(readMode(modeid.ToString()));
+                    groupboxlist[i].Mode[j].CmdItem = new List<CmdItem>();
+                    int k = 0;
+                    foreach(object cmditemid in dbReader(Cmdstring.cmditemid(modeid.ToString()), Cmdstring.cmditemid_fieldlist))
                     {
-                        groupboxlist[i].cmdList[j].parameterList.Add(readParameter(parameters_cmdsID.ToString(), manifestID.ToString()));
+                        groupboxlist[i].Mode[j].CmdItem.Add(readCmdItem(cmditemid.ToString()));
+                        groupboxlist[i].Mode[j].CmdItem[k].Cmd = readCmd(dbReader(Cmdstring.cmdid(cmditemid.ToString()),Cmdstring.cmdid_fieldlist)[0].ToString());
+                        groupboxlist[i].Mode[j].CmdItem[k].Cmd.parameterList = new List<Parameter>();
+                        string cmdID=groupboxlist[i].Mode[j].CmdItem[k].Cmd.cmdID.ToString();
+                        int l = 0;
+                        foreach (object parameterid in dbReader(Cmdstring.parameterid(cmdID), Cmdstring.parameterid_fieldlist))
+                        {
+                            groupboxlist[i].Mode[j].CmdItem[k].Cmd.parameterList.Add(readParameter(parameterid.ToString(),cmdID));
+                            groupboxlist[i].Mode[j].CmdItem[k].Cmd.parameterList[l].parameterValue = readParameterValue(cmditemid.ToString(), parameterid.ToString());
+                            //if (parameterValue != null) groupboxlist[i].Mode[j].CmdItem[k].Cmd.parameterList[l].parameterValue = parameterValue;
+                            l++;   
+                        }
+                        k++;
+                    }
+                    groupboxlist[i].Mode[j].ParameterItem = new List<ParameterItem>();
+                    foreach (object parameteritemid in dbReader(Cmdstring.parameteritemid(modeid.ToString()),Cmdstring.parameteritemid_fieldlist))
+                    {
+                        groupboxlist[i].Mode[j].ParameterItem.Add(readParameteritem(parameteritemid.ToString()));
                     }
                     j++;
                 }
@@ -91,31 +184,120 @@ namespace RobotControlPanel
             }
             return groupboxlist;
         }
-        //readControBox: Return lists of controlboxes, which are special groupboxes contains five buttons (up, down, left, right, stop) 
-        //and these buttons can have several commands (modes)
-        public List<Controlbox> readControlBoxList()
+        //readGroupbox
+        private Groupbox readGroupbox(string groupboxID)
         {
-            List<Controlbox> controlboxList = new List<Controlbox>();
-            int i = 0;
-            foreach (object controlboxID in dbReader(Cmdstring.controlboxid, Cmdstring.groupboxid_fieldlist))
-            {
-                controlboxList.Add(readControlbox(controlboxID.ToString()));
-                controlboxList[i].Modes = new List<ControlboxMode>();
-                int j = 0;
-                foreach (object controlmodeID in dbReader(Cmdstring.controlmodeid(controlboxID.ToString()), Cmdstring.controlmodeid_fieldlist))
-                {
-                    controlboxList[i].Modes.Add(readControlboxMode(controlmodeID.ToString()));
-                    List<Cmd> cmdlist = readControlboxcmds(controlmodeID.ToString());
-                    controlboxList[i].Modes[j].Up = cmdlist[0];
-                    controlboxList[i].Modes[j].Down = cmdlist[1];
-                    controlboxList[i].Modes[j].Left = cmdlist[2];
-                    controlboxList[i].Modes[j].Right = cmdlist[3];
-                    controlboxList[i].Modes[j].Stop = cmdlist[4];
-                    j++;
-                }
-                i++;
-            }
-            return controlboxList;
+            Groupbox groupbox = new Groupbox();
+            List<object> values = new List<object>();
+            values = dbReader(Cmdstring.groupbox(groupboxID), Cmdstring.groupbox_fieldlist);
+            groupbox.groupboxID = Convert.ToInt32(values[0]);
+            groupbox.groupboxName = values[1].ToString();
+            groupbox.groupboxOrder = Convert.ToInt32(values[2]);
+            groupbox.groupboxType = values[3].ToString();
+            groupbox.groupboxComment = values[4].ToString();
+            return groupbox;
+        }
+        //readMode
+        private Mode readMode(string modeID)
+        {
+            Mode mode = new Mode();
+            List<object> values = new List<object>();
+            values = dbReader(Cmdstring.mode(modeID), Cmdstring.mode_fieldlist);
+            mode.modeID = Convert.ToInt32(values[0]);
+            mode.modeName = values[1].ToString();
+            mode.modeOrder = Convert.ToInt32(values[2]);
+            mode.modeComment = values[3].ToString();
+            return mode;
+        }
+
+        //readCmditem
+        private CmdItem readCmdItem(string cmditemID)
+        {
+            CmdItem cmditem = new CmdItem();
+            List<object> values = new List<object>();
+            values = dbReader(Cmdstring.cmditem(cmditemID), Cmdstring.cmditem_fieldlist);
+            cmditem.cmditemID=Convert.ToInt32(values[0]);
+            cmditem.cmditemName=values[1].ToString();
+            cmditem.cmditemOrder=Convert.ToInt32(values[2]);
+            cmditem.cmditemType=values[3].ToString();
+            cmditem.cmditemComment=values[4].ToString();
+            return cmditem;
+        }
+        //readParameteritem
+        private ParameterItem readParameteritem(string parameteritemID)
+        {
+            ParameterItem parameteritem = new ParameterItem();
+            parameteritem.Parameter = new Parameter();
+            List<object> values = new List<object>();
+            values = dbReader(Cmdstring.parameteritem(parameteritemID), Cmdstring.parameteritem_fieldlist);
+            parameteritem.parameteritemID = Convert.ToInt32(values[0]);
+            parameteritem.parameteritemName = values[1].ToString();
+            parameteritem.parameteritemOrder = Convert.ToInt32(values[2]);
+            parameteritem.parameteritemType = values[3].ToString();
+            parameteritem.parameteritemComment = values[4].ToString();
+            parameteritem.Parameter.parameterID=Convert.ToInt32(values[5]);
+            parameteritem.Parameter.parameterName=values[6].ToString();
+            if (values[7].GetType().ToString() != "System.DBNull") parameteritem.Parameter.parameterMin = Convert.ToInt32(values[7]); else  parameteritem.Parameter.parameterMin= null;
+            if (values[8].GetType().ToString() != "System.DBNull") parameteritem.Parameter.parameterMax = Convert.ToInt32(values[8]); else parameteritem.Parameter.parameterMax = null;
+            if (values[9].GetType().ToString() != "System.DBNull") parameteritem.Parameter.parameterDefault = Convert.ToInt32(values[9]); else parameteritem.Parameter.parameterDefault = null;
+            parameteritem.Parameter.parameterComment=values[10].ToString();
+            return parameteritem;
+        }
+        //readCmd: read a cmd which bleongs to a button, or combobox
+        private Cmd readCmd(string cmdID)
+        {
+            Cmd cmd = new Cmd();
+            List<object> values = new List<object>();
+            values = dbReader(Cmdstring.cmd(cmdID), Cmdstring.cmd_fieldlist);
+            cmd.cmdID = Convert.ToInt32(values[0]);
+            cmd.cmdName = values[1].ToString();
+            cmd.cmdByte = Convert.ToInt32(values[2]);
+            cmd.cmdComment = values[3].ToString();
+            return cmd;
+
+        }
+        //readParameter: read a parameter, which belongs to a cmd, 
+        //it need the actual cmd and its parameter's connection ID, and the actual manifestID
+        //if parameter isn't in manifest_parameters table, parameterValue and Type will NULL
+        //(except if parameter haven't got default value, because this time Type will a textbox)
+        private Parameter readParameter(string parameterID, string cmdID)
+        {
+            Parameter parameter = new Parameter();
+            List<object> values = new List<object>();
+            values = dbReader(Cmdstring.parameter(parameterID, cmdID), Cmdstring.parameter_fieldlist);
+            //if (values.Count != 0)
+            //{
+                parameter.parameterID = Convert.ToInt32(values[0]);
+                parameter.parameterName = values[1].ToString();               
+                if (values[2].GetType().ToString() != "System.DBNull") parameter.parameterMin = Convert.ToInt32(values[2]); else parameter.parameterMin = null;
+                if (values[3].GetType().ToString() != "System.DBNull") parameter.parameterMax = Convert.ToInt32(values[3]); else parameter.parameterMax = null;
+                if (values[4].GetType().ToString() != "System.DBNull") parameter.parameterDefault = Convert.ToInt32(values[4]); else parameter.parameterDefault = null;
+                parameter.parameterComment = values[5].ToString();
+                parameter.parameterOrder = Convert.ToInt32(values[6]);
+
+            //}
+            //else
+            //{
+            //    values = dbReader(Cmdstring.parameter_fix(parameters_cmdsID), Cmdstring.parameter_fix_fieldlist);
+            //    parameter.parameterID = Convert.ToInt32(values[0]);
+            //    parameter.parameterName = values[1].ToString();
+            //    parameter.parameterOrder = Convert.ToInt32(values[2]);
+            //    if (values[3].GetType().ToString() != "System.DBNull") parameter.parameterMin = Convert.ToInt32(values[3]); else parameter.parameterMin = null;
+            //    if (values[4].GetType().ToString() != "System.DBNull") parameter.parameterMax = Convert.ToInt32(values[4]); else parameter.parameterMax = null;
+            //    if (values[5].GetType().ToString() != "System.DBNull") parameter.parameterDefault = Convert.ToInt32(values[5]); else parameter.parameterDefault = null;
+            //    parameter.parameterValue = null;
+            //    if (parameter.parameterDefault != null) parameter.parameterType = null; else parameter.parameterType = "textbox";
+            //    parameter.manifest_parameterComment = null;
+            //}
+            return parameter;
+        }
+        private int? readParameterValue(string cmditemID, string parameterID)
+        {
+            List<object> values = new List<object>();
+            values = dbReader(Cmdstring.parametervalue(cmditemID, parameterID), Cmdstring.parametervalue_fieldlist);
+            int? parameterValue=null;
+            if (values.Count != 0) parameterValue = Convert.ToInt32(values[0]);
+            return parameterValue;
         }
         //readSettings: return a property that define behavior of the connection
         public Settings readSettings()
@@ -169,63 +351,6 @@ namespace RobotControlPanel
             }
             return metadatalist;
         }
-        
-        //dbReader: Read from database, it need a cmdstring and a fieldlist which belongs to that actually used cmdstring
-        //Return lists of the queried object, which uncasted, following use you must cast to usable datatypes.
-        private List<object> dbReader(string cmdstring, string[] fieldlist)
-        {
-            List<object> r = new List<object>();            
-            SQLiteConnection db = new SQLiteConnection();
-            try
-            {
-                db.ConnectionString = @"Data Source=" + dbPath;
-                db.Open();
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error");
-            }
-            SQLiteCommand cmd = new SQLiteCommand();
-            cmd.Connection = db;
-            cmd.CommandText = cmdstring;
-            SQLiteDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                foreach(string field in fieldlist)
-                {
-                    r.Add(dr[field]);
-                }
-            }
-            db.Close();
-            return r;
-        }
-        private object dbReader(string tempPath, string cmdstring, string[] fieldlist)
-        {
-            object r = new object();
-            SQLiteConnection db = new SQLiteConnection();
-            try
-            {
-                db.ConnectionString = @"Data Source=" + tempPath;
-                db.Open();
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error");
-            }
-            SQLiteCommand cmd = new SQLiteCommand();
-            cmd.Connection = db;
-            cmd.CommandText = cmdstring;
-            SQLiteDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                foreach (string field in fieldlist)
-                {
-                    r = dr[field];
-                }
-            }
-            db.Close();
-            return r;
-        }  
         //readSyntax: read one of the command's syntax, which will send to port
         //it need syntaxID of the finded syntax
         private Syntax readSyntax(string syntaxID)
@@ -251,24 +376,6 @@ namespace RobotControlPanel
             sign.signComment = values[3].ToString();
             return sign;
         }
-        //ControlboxMode: read one of the modes of a controlbox
-        //One mode contain five buttons, and its commands
-        private ControlboxMode readControlboxMode(string controlmodeID)
-        {
-            ControlboxMode controlboxmode = new ControlboxMode();
-            List<object> values = new List<object>();
-            values = dbReader(Cmdstring.controlmode(controlmodeID), Cmdstring.controlmode_fieldlist);
-            controlboxmode.controlboxModeID=Convert.ToInt32(values[0]);
-            controlboxmode.controlboxModeName=values[1].ToString();
-            controlboxmode.controlboxModeOrder=Convert.ToInt32(values[2]);
-            controlboxmode.Up=readCmd(values[3].ToString());        
-            controlboxmode.Down=readCmd(values[4].ToString());
-            controlboxmode.Left=readCmd(values[5].ToString());
-            controlboxmode.Right=readCmd(values[6].ToString());
-            controlboxmode.Stop=readCmd(values[7].ToString());
-            controlboxmode.controlBoxModeComment = values[8].ToString();
-            return controlboxmode;
-        }
         //readMetadata: read one metadatafield and its value, it need ID of the finded metadata
         private Metadata readMetadata(string metadataID)
         {
@@ -280,94 +387,6 @@ namespace RobotControlPanel
             meta.metadataValue = values[2].ToString();
             return meta;
         }
-        //readControlbox: read a controlbox, its name, and its order
-        private Controlbox readControlbox(string controlboxID)
-        {
-            Controlbox controlbox = new Controlbox();
-            List<object> values = new List<object>();
-            values = dbReader(Cmdstring.groupbox(controlboxID), Cmdstring.groupbox_fieldlist);
-            controlbox.groupboxID = Convert.ToInt32(values[0]);
-            controlbox.groupboxName = values[1].ToString();
-            controlbox.groupboxOrder = Convert.ToInt32(values[2]);
-            return controlbox;
-        }
-        //readControlboxcmds: read a cmdlist and its parameterlist which is belong to a controlbox
-        private List<Cmd> readControlboxcmds(string controlmodeID)
-        {
-            List<Cmd> cmdlist = new List<Cmd>();
-            int i = 0;
-            foreach (object manifestID in dbReader(Cmdstring.controlmode_cmds(controlmodeID), Cmdstring.controlmode_cmds_fieldlist))
-            {
-                cmdlist.Add(readCmd(manifestID.ToString()));
-                cmdlist[i].parameterList = new List<Parameter>();
-                foreach (object parameters_cmdsID in dbReader(Cmdstring.parameters_cmdsid(cmdlist[i].cmdID.ToString()), Cmdstring.parameters_cmdsid_fieldlist))
-                {
-                    cmdlist[i].parameterList.Add(readParameter(parameters_cmdsID.ToString(), manifestID.ToString()));
-                }
-                i++;
-            }
-            return cmdlist;
-        }
-        //readGroupbox: read a groupbox, its name, and its order
-        private CmdGroup readGroupbox(string groupboxID)
-        {
-            CmdGroup groupbox = new CmdGroup();
-            List<object> values = new List<object>();
-            values = dbReader(Cmdstring.groupbox(groupboxID), Cmdstring.groupbox_fieldlist);
-            groupbox.groupboxID = Convert.ToInt32(values[0]);
-            groupbox.groupboxName = values[1].ToString();
-            groupbox.groupboxOrder = Convert.ToInt32(values[2]);
-            return groupbox;
-        }
-        //readCmd: read a cmd which bleongs to a button, or combobox
-        private Cmd readCmd(string manifestID)
-        {
-            Cmd cmd = new Cmd();
-            List<object> values = new List<object>();
-            values = dbReader(Cmdstring.cmd(manifestID), Cmdstring.cmd_fieldlist);
-            cmd.cmdID = Convert.ToInt32(values[0]);
-            cmd.cmdName = values[1].ToString();
-            cmd.cmdByte = Convert.ToInt32(values[2]);
-            cmd.cmdType = values[3].ToString();
-            cmd.manifestComment = values[4].ToString();
-            return cmd;
 
-        }
-        //readParameter: read a parameter, which belongs to a cmd, 
-        //it need the actual cmd and its parameter's connection ID, and the actual manifestID
-        //if parameter isn't in manifest_parameters table, parameterValue and Type will NULL
-        //(except if parameter haven't got default value, because this time Type will a textbox)
-        private Parameter readParameter(string parameters_cmdsID, string manifestID)
-        {
-            Parameter parameter = new Parameter();
-            List<object> values = new List<object>();           
-            values=dbReader(Cmdstring.parameter(parameters_cmdsID, manifestID), Cmdstring.parameter_fieldlist);
-            if (values.Count != 0)
-            {
-                parameter.parameterID = Convert.ToInt32(values[0]);
-                parameter.parameterName = values[1].ToString();
-                parameter.parameterOrder = Convert.ToInt32(values[2]);
-                if (values[3].GetType().ToString() != "System.DBNull") parameter.parameterMin = Convert.ToInt32(values[3]); else parameter.parameterMin = null;
-                if (values[4].GetType().ToString() != "System.DBNull") parameter.parameterMax = Convert.ToInt32(values[4]); else parameter.parameterMax = null;
-                if (values[5].GetType().ToString() != "System.DBNull") parameter.parameterDefault = Convert.ToInt32(values[5]); else parameter.parameterDefault = null;
-                if (values[6].GetType().ToString() != "System.DBNull") parameter.parameterValue = Convert.ToInt32(values[6]); else parameter.parameterValue = null;
-                parameter.parameterType = values[7].ToString();
-                parameter.manifest_parameterComment = values[8].ToString();
-            }
-            else
-            {
-                values = dbReader(Cmdstring.parameter_fix(parameters_cmdsID), Cmdstring.parameter_fix_fieldlist);
-                parameter.parameterID = Convert.ToInt32(values[0]);
-                parameter.parameterName = values[1].ToString();
-                parameter.parameterOrder = Convert.ToInt32(values[2]);
-                if (values[3].GetType().ToString() != "System.DBNull") parameter.parameterMin = Convert.ToInt32(values[3]); else parameter.parameterMin = null;
-                if (values[4].GetType().ToString() != "System.DBNull") parameter.parameterMax = Convert.ToInt32(values[4]); else parameter.parameterMax = null;
-                if (values[5].GetType().ToString() != "System.DBNull") parameter.parameterDefault = Convert.ToInt32(values[5]); else parameter.parameterDefault = null;
-                parameter.parameterValue = null;
-                if (parameter.parameterDefault != null) parameter.parameterType = null; else parameter.parameterType = "textbox";
-                parameter.manifest_parameterComment = null;
-            }
-            return parameter;
-        }
     }
 }

@@ -62,9 +62,6 @@
             this.comboBoxPortList = new System.Windows.Forms.ComboBox();
             this.tabControlBottom = new System.Windows.Forms.TabControl();
             this.tabPageControl = new System.Windows.Forms.TabPage();
-            this.groupBoxControl = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.comboBoxCmdList = new System.Windows.Forms.ComboBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.mainFormMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -77,8 +74,6 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBoxConnection.SuspendLayout();
             this.tabControlBottom.SuspendLayout();
-            this.tabPageControl.SuspendLayout();
-            this.groupBoxControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainFormMenu
@@ -90,7 +85,7 @@
             this.toolStripMenuItemHelp});
             this.mainFormMenu.Location = new System.Drawing.Point(0, 0);
             this.mainFormMenu.Name = "mainFormMenu";
-            this.mainFormMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.mainFormMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.mainFormMenu.Size = new System.Drawing.Size(784, 24);
             this.mainFormMenu.TabIndex = 0;
             this.mainFormMenu.Text = "mainFormMenu";
@@ -407,7 +402,6 @@
             // 
             // tabPageControl
             // 
-            this.tabPageControl.Controls.Add(this.groupBoxControl);
             this.tabPageControl.Location = new System.Drawing.Point(4, 4);
             this.tabPageControl.Name = "tabPageControl";
             this.tabPageControl.Padding = new System.Windows.Forms.Padding(3);
@@ -415,35 +409,6 @@
             this.tabPageControl.TabIndex = 0;
             this.tabPageControl.Text = "Control";
             this.tabPageControl.UseVisualStyleBackColor = true;
-            // 
-            // groupBoxControl
-            // 
-            this.groupBoxControl.Controls.Add(this.button1);
-            this.groupBoxControl.Controls.Add(this.comboBoxCmdList);
-            this.groupBoxControl.Location = new System.Drawing.Point(0, 6);
-            this.groupBoxControl.Name = "groupBoxControl";
-            this.groupBoxControl.Size = new System.Drawing.Size(161, 155);
-            this.groupBoxControl.TabIndex = 1;
-            this.groupBoxControl.TabStop = false;
-            this.groupBoxControl.Text = "Control";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(23, 81);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // comboBoxCmdList
-            // 
-            this.comboBoxCmdList.FormattingEnabled = true;
-            this.comboBoxCmdList.Location = new System.Drawing.Point(23, 28);
-            this.comboBoxCmdList.Name = "comboBoxCmdList";
-            this.comboBoxCmdList.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxCmdList.TabIndex = 0;
             // 
             // serialPort1
             // 
@@ -477,8 +442,6 @@
             this.groupBoxConnection.ResumeLayout(false);
             this.groupBoxConnection.PerformLayout();
             this.tabControlBottom.ResumeLayout(false);
-            this.tabPageControl.ResumeLayout(false);
-            this.groupBoxControl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -515,9 +478,6 @@
         private System.Windows.Forms.ComboBox comboBoxBaudRate;
         private System.Windows.Forms.Label labelPortList;
         private System.Windows.Forms.ComboBox comboBoxPortList;
-        private System.Windows.Forms.GroupBox groupBoxControl;
-        private System.Windows.Forms.ComboBox comboBoxCmdList;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TabControl tabControlTop;
         private System.Windows.Forms.TabPage tabPageConsole;
         private System.Windows.Forms.TabControl tabControlBottom;

@@ -1,0 +1,39 @@
+SELECT cmdID, cmdName, cmdByte,cmdComment
+FROM cmd
+WHERE cmdID=
+
+SELECT parameter.[parameterID], parameterName, parameterMin, parameterMax, parameterDefault, parameterComment, parameterOrder
+FROM parameter, cmd_parameter
+WHERE cmd_parameter.[parameterID]=parameter.[parameterID] AND
+parameter.[parameterID]= 
+AND cmdID=
+
+SELECT cmditemID, cmditemName, cmditemOrder, cmditemType, cmditemComment 
+FROM cmditem
+WHERE cmditemID=
+
+SELECT parameteritemID, parameteritemName, parameteritemOrder, parameteritemType, parameteritemComment
+FROM parameteritem
+WHERE parameteritemID=
+
+SELECT modeID, modeName, modeOrder, modeComment
+FROM mode
+WHERE modeID=
+
+SELECT groupboxID, groupboxName, groupboxOrder, groupboxType, groupboxComment
+FROM groupbox
+WHERE groupboxID=
+
+SELECT groupboxID FROM groupbox
+
+SELECT modeID FROM mode WHERE groupboxID=
+
+SELECT cmditemID FROM cmditem WHERE modeID=
+
+SELECT cmdID FROM cmditem WHERE cmditemID=
+
+SELECT parameterID FROM cmd_parameter WHERE cmdID=
+
+SELECT parameterValue FROM cmditem_parameter WHERE cmditemID= AND parameterid=
+
+SELECT parameteritemID FROM parameteritem WHERE modeID=

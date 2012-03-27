@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Forms.Layout;
 using System.Data.SQLite;
 using System.IO.Ports;
 
@@ -15,8 +16,9 @@ namespace RobotControlPanel
     {
         //Instantiation of classes and important lists
         dbHandler dataBase = new dbHandler();
-        List<CmdGroup> cmdGroupList = new List<CmdGroup>();
-        List<Controlbox> controlBoxList = new List<Controlbox>();
+        List<Groupbox> GroupboxList = new List<Groupbox>();
+        //List<CmdGroup> cmdGroupList = new List<CmdGroup>();
+        //List<Controlbox> controlBoxList = new List<Controlbox>();
         Settings set = new Settings();
         List<Metadata> meta = new List<Metadata>();
         List<Syntax> syn = new List<Syntax>();
@@ -29,6 +31,8 @@ namespace RobotControlPanel
             if(Properties.Settings.Default.dbPath.Length != 0) dataBase.SetdbPath(Properties.Settings.Default.dbPath);
             comboBoxBaudRate.DataSource = baudList;
             buttonRefresh_Click(null,null);
+            AddControls add = new AddControls();
+            tabPageControl.Controls.Add(add.AddButton());
         }
 
         //Close Window, close port
@@ -39,8 +43,9 @@ namespace RobotControlPanel
         //----
         private void cmdReadFromDB()
         {
-            cmdGroupList = dataBase.readGroupboxList();
-            controlBoxList = dataBase.readControlBoxList();
+            GroupboxList = dataBase.readGroupboxList();
+            //cmdGroupList = dataBase.readGroupboxList();
+            //controlBoxList = dataBase.readControlBoxList();
             set = dataBase.readSettings();
             meta = dataBase.readMetadataList();
             syn = dataBase.readSyntaxList();
@@ -54,7 +59,7 @@ namespace RobotControlPanel
         {
             openDB.ShowDialog();
             cmdReadFromDB();
-            comboBoxCmdListFill();
+            //comboBoxCmdListFill();
 
         }
         //Open, FileOK
