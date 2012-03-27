@@ -111,7 +111,7 @@ namespace RobotControlPanel
             db.Close();
             return r;
         }
-        //DO NOT DELETE THIS
+        //DO NOT DELETE THIS---
         //private List<object> dbReader(string tempPath, string cmdstring, string[] fieldlist)
         //{
         //    List<object> r = new List<object>();
